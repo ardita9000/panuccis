@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Panucci's Pizza</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            padding: 5px;
+            font-family: "Lucida Sans", sans-serif;
+        }
+
+        body {
+            background-color: #f1f1f1;
+        }
+
+        .flex-container {
+            display: flex;
+            flex-wrap: wrap;
+            margin-top: 50px;
+        }
+
+        h1 {
+            font-size: 28pt;
+        }
+
+        h2 {
+            font-size: 24pt;
+        }
+
+        h3 {
+            font-size: 18pt;
+        }
+
+        p {
+            font-size: 14pt;
+        }
+
+        .header {
+            background-color: #ffffff;
+            color: dimgray;
+            padding: 5px;
+            text-align: left;
+        }
+
+        .menu {
+            background-color: #ffffff;
+            color: green;
+            padding: 10px 10px;
+            /*color: #00519e;*/
+        }
+
+        .menu > div {
+            margin-top: 18px;
+            text-align: left;
+            font-weight: bold;
+        }
+
+        .main {
+            padding: 0 20px 20px 20px;
+            line-height: 1.5em;
+            margin-left: 80px;
+            background-color: #ffffff;
+        }
+
+        .step {
+            padding: 5px 10px;
+            text-align:center;
+            border-radius: 25px;
+            background-color:dimgrey;
+            color:#ffffff;
+            line-height: 50px;
+            opacity: 0.5;
+        }
+
+        .step.active {
+            opacity: 1;
+        }
+
+        .step.finished {
+            background-color: green;
+            opacity: 1;
+        }
+
+        .step_description {
+            margin-left: 10px;
+            color: dimgrey;
+        }
+
+        .step_description:hover{
+            color: #035956;
+            opacity: 0.7;
+        }
+
+        .nextButton {
+            padding: 10px 20px;
+            background-color: #00b33c;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            opacity: 0.7;
+        }
+
+        @media only screen and (min-width: 865px) {
+            .desktop-3-cols {width: 25.00%}
+            .desktop-6-cols {width: 50.00%}
+        }
+
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Panucci's Pizza</h1>
+    </div>
+    <div class="flex-container">
+        <div class="menu desktop-3-cols">
+            <div style="font-size:24pt">Tisch-Reservierung</div>
+            <div>
+                <div class="progress_bar" onclick="nextTab('mainData')"><span id="mainData_step" class="step">1</span><span id="description" class="step_description">Personenanzahl, Datum, Uhrzeit auswählen</span></div>
+                <div class="progress_bar" onclick="nextTab('table')"><span id="table_step" class="step">2</span><span class="step_description">Tisch auswählen (optional)</span></div>
+                <div class="progress_bar" onclick="nextTab('dish')"><span id="dish_step" class="step">3</span><span class="step_description">Speisen auswählen (optional)</span></div>
+                <div class="progress_bar" onclick="nextTab('contact')"><span id="contact_step" class="step">4</span><span class="step_description">Kontaktdaten angeben</span></div>
+                <div class="progress_bar"><span id="success_step" class="step">5</span><span class="step_description">Reservierung abschließen</span></div>
+            </div>
+        </div>
+
+        <div class="main desktop-6-cols">
+            <form id="reservation_form" action="">
+                <div id="mainData" class="tab">
+                <h3>Für wie viele Personen möchten Sie reservieren?</h3>
+                    <label for="guests">Anzahl Personen:</label>
+                    <select name="guests" id="guests" onchange="updateNav()">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                    </select>
+
+                <h3>An welchem Tag möchten Sie reservieren?</h3>
+                    <label for="start">Datum:</label>
+                    <input type="date" id="start" max="2022-12-31" onchange="updateNav()">
+                    <script>
+                        document.getElementById('start').min = new Date().toISOString().split('T')[0];
+                        document.getElementById('start').value = new Date().toISOString().split('T')[0];
+                    </script>
+
+                <h3>Um wie viel Uhr möchten Sie reservieren?</h3>
+                    <label for="time">Uhrzeit:</label>
+                    <select name="time" id="time" onchange="updateNav()">
+                        <option value="18:00">18:00</option>
+                        <option value="18:30">18:30</option>
+                        <option value="19:00">19:00</option>
+                        <option value="19:30">19:30</option>
+                        <option value="20:00">20:00</option>
+                        <option value="20:30">20:30</option>
+                        <option value="21:00">21:00</option>
+                        <option value="21:30">21:30</option>
+                    </select>
+
+                    <div style="overflow:auto;">
+                        <div style="float: right; margin-top: 50px;">
+                            <button type="button" class="nextButton" onclick="updateNav(); nextTab('table')">Weiter</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="table" class="tab" style="display: none;">
+                    <h3>Welche Tische möchten Sie reservieren? (optional)</h3>
+
+                    <div style="overflow:auto;">
+                        <div style="float: right; margin-top: 50px;">
+                            <button type="button" class="nextButton" onclick="nextTab('dish')">Weiter</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="dish" class="tab" style="display: none;">
+                    <h3>Welche Speisen möchten Sie wählen? (optional)</h3>
+
+                    <div style="overflow:auto;">
+                        <div style="float: right; margin-top: 50px;">
+                            <button type="button" class="nextButton" onclick="nextTab('contact')">Weiter</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="contact" class="tab" style="display: none;">
+                    <h3>Geben Sie Ihre Kontaktdaten an.</h3>
+
+                    <div style="overflow:auto;">
+                        <div style="float: right; margin-top: 50px;">
+                            <button type="button" class="nextButton" onclick="nextTab('success')">Reservieren</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="success" class="tab" style="display: none;">
+                    <h3>Reservierung erfolgreich abgeschlossen!</h3>
+                    <p>Sie erhalten Ihre Reservierungsdaten per E-Mail.</p>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+    <script>
+        currentTab = 'mainData'
+        document.getElementById(`${currentTab}_step`).classList.add('active');
+
+        function nextTab(theNextTab) {
+            document.getElementById(currentTab).style.display = 'none';
+            document.getElementById(`${currentTab}_step`).classList.remove('active');
+
+            currentTab = theNextTab;
+
+            document.getElementById(theNextTab).style.display = 'block';
+            document.getElementById(`${theNextTab}_step`).classList.add('active');
+        }
+
+        function updateNav(){
+            guests = document.getElementById('guests').value;
+            date = document.getElementById('start').value;
+            time = document.getElementById('time').value;
+            document.getElementById('description').innerText = guests + ' Personen, ' + date + ', ' + time;
+            document.getElementById(`${currentTab}_step`).classList.add('finished');
+
+        }
+
+    </script>
+</body>
+</html>
