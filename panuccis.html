@@ -262,6 +262,22 @@
                 <div id="contact" class="tab" style="display: none;">
                     <h3>Geben Sie Ihre Kontaktdaten an.</h3>
 
+                    <label for="firstName">Vorname:</label>
+                    <input type="text" id="firstName" onchange="updateNav()">
+                    <br> <br> <br>
+
+                    <label for="lastName">Nachname:</label>
+                    <input type="text" id="lastName" onchange="updateNav()">
+                    <br> <br> <br>
+
+                    <label for="email">E-Mail-Adresse:</label>
+                    <input type="text" id="email" onchange="updateNav()">
+                    <br> <br> <br>
+
+                    <label for="telNumber">Telefonnummer:</label>
+                    <input type="text" id="telNumber" onchange="updateNav()">
+
+
                     <div style="overflow:auto;">
                         <div style="float: right; margin-top: 50px;">
                             <button type="button" class="nextButton" onclick="nextTab('success')">Reservieren</button>
