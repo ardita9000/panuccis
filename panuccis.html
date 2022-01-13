@@ -33,7 +33,7 @@
         }
 
         p {
-            font-size: 14pt;
+            font-size: 12pt;
         }
 
         .header {
@@ -98,6 +98,45 @@
             color: #ffffff;
             border: none;
             border-radius: 5px;
+            font-size: 12pt;
+        }
+
+        .noSelection {
+            padding: 10px 20px;
+            background-color: #ddd;
+            color: black;
+            border: none;
+            border-radius: 5px;
+            font-size: 12pt;
+        }
+
+        .table {
+            width: 50px;
+            height: 50px;
+            margin: 25px;
+            padding: 5px;
+            background-color: #eeeeee;
+            border: 2px solid #aaaaaa;
+        }
+
+        .grid-container {
+            display:  grid;
+            grid-template-columns: auto auto auto auto;
+        }
+
+        .grid-container_2 {
+            display:  grid;
+            grid-template-columns: 100px 100px 100px;
+        }
+
+        .bar {
+            grid-row-start: 2;
+            width: 350px;
+            height: 150px;
+            margin: 25px;
+            padding: 5px;
+            background-color: #eeeeee;
+            border: 2px solid #aaaaaa;
         }
 
         button:hover {
@@ -120,8 +159,8 @@
             <div style="font-size:24pt">Tisch-Reservierung</div>
             <div>
                 <div class="progress_bar" onclick="nextTab('mainData')"><span id="mainData_step" class="step">1</span><span id="description" class="step_description">Personenanzahl, Datum, Uhrzeit auswählen</span></div>
-                <div class="progress_bar" onclick="nextTab('table')"><span id="table_step" class="step">2</span><span class="step_description">Tisch auswählen (optional)</span></div>
-                <div class="progress_bar" onclick="nextTab('dish')"><span id="dish_step" class="step">3</span><span class="step_description">Speisen auswählen (optional)</span></div>
+                <div class="progress_bar" onclick="nextTab('table')"><span id="table_step" class="step">2</span><span id="table_description" class="step_description">Tisch auswählen (optional)</span></div>
+                <div class="progress_bar" onclick="nextTab('dish')"><span id="dish_step" class="step">3</span><span id="dish_description" class="step_description">Speisen auswählen (optional)</span></div>
                 <div class="progress_bar" onclick="nextTab('contact')"><span id="contact_step" class="step">4</span><span class="step_description">Kontaktdaten angeben</span></div>
                 <div class="progress_bar"><span id="success_step" class="step">5</span><span class="step_description">Reservierung abschließen</span></div>
             </div>
@@ -175,21 +214,45 @@
 
                 <div id="table" class="tab" style="display: none;">
                     <h3>Welche Tische möchten Sie reservieren? (optional)</h3>
+                    <p>Sie können die Reservierung auch ohne Tischauswahl abschließen. <br>Unser System weist Ihnen dann automatisch Tische zu.</p>
+
+                    <div class="grid-container_2">
+                        <div id="table1" class="table" onclick="selectedTable()">1</div>
+                        <div id="table2" class="table" onclick="selectedTable()">2</div>
+                        <div id="table3" class="table" onclick="selectedTable()">3</div>
+                        <div class="bar">Theke</div>
+                    </div>
+
+                    <div class="grid-container">
+                        <div id="table4" class="table" onclick="selectedTable()">4</div>
+                        <div id="table5" class="table" onclick="selectedTable()">5</div>
+                        <div id="table6" class="table" onclick="selectedTable()">6</div>
+                        <div id="table7" class="table" onclick="selectedTable()">7</div>
+                        <div id="table8" class="table" onclick="selectedTable()">8</div>
+                        <div id="table9" class="table" onclick="selectedTable()">9</div>
+                        <div id="table10" class="table" onclick="selectedTable()">10</div>
+                        <div id="table11" class="table" onclick="selectedTable()">11</div>
+                    </div>
+                    
 
                     <div style="overflow:auto;">
                         <div style="float: right; margin-top: 50px;">
-                            <button type="button" class="nextButton" onclick="nextTab('dish')">Weiter</button>
+                            <button type="button" class="nextButton" onclick="updateNav(); nextTab('dish')">Weiter</button>
                         </div>
                     </div>
                 </div>
+            </form>
+
+
 
                 <div id="dish" class="tab" style="display: none;">
                     <h3>Welche Speisen möchten Sie wählen? (optional)</h3>
+                    <p>Sie können die Reservierung auch ohne Auswahl von Speisen abschließen. <br> Wenn Sie Speisen auswählen, können Sie Ihre Auswahl im Restaurant ändern.</p>
 
-			<h4>Person 1</h4>
+            <h4>Person 1</h4>
                     <label for="starter">Vorspeise:</label>
                     <select name="starter" id="starter" onchange="updateNav()">
-			<option value="">Vorspeise wählen</option>
+            <option value="">Vorspeise wählen</option>
                         <option value="Mozzarella Tartufata">Mozzarella Tartufata</option>
                         <option value="Tartar di Tonno">Tartar di Tonno</option>
                         <option value="Trota Salmonata agli Spinaci">Trota Salmonata agli Spinaci</option>
@@ -197,32 +260,32 @@
                         <option value="Parmigiana di Melanzane">Parmigiana di Melanzane</option>
                         <option value="Carpaccio di Manzo">Carpaccio di Manzo</option>
                     </select>
-					
-			<div></div>
+                    
+            <div></div>
 
                     <label for="main_course">Hauptspeise:</label>
                     <select name="main_course" id="main_course" onchange="updateNav()">
-			<option value="">Hauptspeise wählen</option>
+            <option value="">Hauptspeise wählen</option>
                         <option value="Tagliolini alla Parmigiana">Tagliolini alla Parmigiana</option>
                         <option value="Tagliolini Porcini e Pancetta">Tagliolini Porcini e Pancetta</option>
                         <option value="Spaghetti Gallo Nero">Spaghetti Gallo Nero</option>
                         <option value="Pizza Speciale">Pizza Speciale</option>
                     </select>
-					
-			<div></div>
-					
-		    <label for="dessert">Dessert:</label>
-		    <select name="dessert" id="dessert" onchange="updateNav()">
-			<option value="">Dessert wählen</option>
+                    
+            <div></div>
+                    
+            <label for="dessert">Dessert:</label>
+            <select name="dessert" id="dessert" onchange="updateNav()">
+            <option value="">Dessert wählen</option>
                         <option value="Tiramisù">Tiramisù</option>
                         <option value="Creme Brulée">Creme Brulée</option>
                         <option value="Panna Cotta">Panna Cotta</option>
                     </select>
-					
-			<h4>Person 2</h4>
-		    <label for="starter">Vorspeise:</label>
+                    
+            <h4>Person 2</h4>
+            <label for="starter">Vorspeise:</label>
                     <select name="starter" id="starter" onchange="updateNav()">
-			<option value="">Vorspeise wählen</option>
+            <option value="">Vorspeise wählen</option>
                         <option value="Mozzarella Tartufata">Mozzarella Tartufata</option>
                         <option value="Tartar di Tonno">Tartar di Tonno</option>
                         <option value="Trota Salmonata agli Spinaci">Trota Salmonata agli Spinaci</option>
@@ -230,59 +293,61 @@
                         <option value="Parmigiana di Melanzane">Parmigiana di Melanzane</option>
                         <option value="Carpaccio di Manzo">Carpaccio di Manzo</option>
                     </select>
-					
-			<div></div>
+                    
+            <div></div>
 
                     <label for="main_course">Hauptspeise:</label>
                     <select name="main_course" id="main_course" onchange="updateNav()">
-			<option value="">Hauptspeise wählen</option>
+            <option value="">Hauptspeise wählen</option>
                         <option value="Tagliolini alla Parmigiana">Tagliolini alla Parmigiana</option>
                         <option value="Tagliolini Porcini e Pancetta">Tagliolini Porcini e Pancetta</option>
                         <option value="Spaghetti Gallo Nero">Spaghetti Gallo Nero</option>
                         <option value="Pizza Speciale">Pizza Speciale</option>
                     </select>
-					
-			<div></div>
-					
-		    <label for="dessert">Dessert:</label>
-		    <select name="dessert" id="dessert" onchange="updateNav()">
-			<option value="">Dessert wählen</option>
+                    
+            <div></div>
+                    
+            <label for="dessert">Dessert:</label>
+            <select name="dessert" id="dessert" onchange="updateNav()">
+            <option value="">Dessert wählen</option>
                         <option value="Tiramisù">Tiramisù</option>
                         <option value="Creme Brulée">Creme Brulée</option>
                         <option value="Panna Cotta">Panna Cotta</option>
                     </select>
-							
+                            
                     <div style="overflow:auto;">
                         <div style="float: right; margin-top: 50px;">
-                            <button type="button" class="nextButton" onclick="nextTab('contact')">Weiter</button>
+                            <button type="button" class="nextButton" onclick="updateNav(); nextTab('contact')">Weiter</button>
                         </div>
                     </div>
                 </div>
 
                 <div id="contact" class="tab" style="display: none;">
-                    <h3>Geben Sie Ihre Kontaktdaten an.</h3>
-
-                    <label for="firstName">Vorname:</label>
-                    <input type="text" id="firstName" onchange="updateNav()">
-                    <br> <br> <br>
-
-                    <label for="lastName">Nachname:</label>
-                    <input type="text" id="lastName" onchange="updateNav()">
-                    <br> <br> <br>
-
-                    <label for="email">E-Mail-Adresse:</label>
-                    <input type="text" id="email" onchange="updateNav()">
-                    <br> <br> <br>
-
-                    <label for="telNumber">Telefonnummer:</label>
-                    <input type="text" id="telNumber" onchange="updateNav()">
-
-
-                    <div style="overflow:auto;">
-                        <div style="float: right; margin-top: 50px;">
-                            <button type="button" class="nextButton" onclick="nextTab('success')">Reservieren</button>
+                    <form onsubmit="formSubmit(event)">
+                        <h3>Geben Sie Ihre Kontaktdaten an.</h3>
+    
+                        <label for="firstName">Vorname:</label>
+                        <input type="text" id="firstName" onchange="updateNav()" required>
+                        <br> <br> <br>
+    
+                        <label for="lastName">Nachname:</label>
+                        <input type="text" id="lastName" onchange="updateNav()" required>
+                        <br> <br> <br>
+    
+                        <label for="email">E-Mail-Adresse:</label>
+                        <input type="text" id="email" onchange="updateNav()" required>
+                        <br> <br> <br>
+    
+                        <label for="telNumber">Telefonnummer:</label>
+                        <input type="text" id="telNumber" onchange="updateNav()" required>
+    
+    
+                        <div style="overflow:auto;">
+                            <div style="float: right; margin-top: 50px;">
+                                <button type="submit" class="nextButton">Reservieren</button>
+                            </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
 
                 <div id="success" class="tab" style="display: none;">
@@ -290,7 +355,7 @@
                     <p>Sie erhalten Ihre Reservierungsdaten per E-Mail.</p>
                 </div>
 
-            </form>
+           
         </div>
     </div>
 
@@ -312,11 +377,52 @@
             guests = document.getElementById('guests').value;
             date = document.getElementById('start').value;
             time = document.getElementById('time').value;
-            document.getElementById('description').innerText = guests + ' Personen, ' + date + ', ' + time;
+            document.getElementById('description').innerText = guests + ' Personen, ' + date + ', ' + time + 'Uhr';
             document.getElementById(`${currentTab}_step`).classList.add('finished');
 
+            if(currentTab == 'table') {
+                let tables = document.querySelectorAll('.table');
+                let tables_selected = false;
+                tables.forEach((event) => {
+                    if(event.style['background-color'] == 'green'){
+                        tables_selected = true;
+                    }
+                })
+                if(tables_selected){
+                    document.getElementById('table_description').innerText = 'Lieblingstisch ausgewählt'
+                }
+                else{
+                    document.getElementById('table_description').innerText = 'Ohne Tischauswahl reservieren'
+                }
+            }
+
+            if(currentTab == 'dish') {
+                selects = document.querySelectorAll('#dish > select');
+                if(Array.from(selects).some((event) => event.value != '')){
+                    document.getElementById('dish_description').innerText = 'Lieblingsspeisen gewählt'
+                }
+                else{
+                    document.getElementById('dish_description').innerText = 'Ohne Speisen reservieren'
+                }
+            }
         }
 
+        function selectedTable() {
+            if(event.target.style['background-color'] == 'green'){
+                event.target.style['background-color'] = '#eeeeee';     
+            }
+            else {
+                event.target.style['background-color'] = 'green';                
+            }
+        }
+
+        function formSubmit(e){
+            e.preventDefault();
+            updateNav();
+            nextTab('success');
+            document.getElementById('success_step').classList.add('finished');
+            return false;
+        }
     </script>
 </body>
 </html>
