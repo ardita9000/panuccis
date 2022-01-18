@@ -391,7 +391,7 @@
                     <p>Sie erhalten Ihre Reservierungsdaten per E-Mail.</p>
                 </div>
 
-           
+
         </div>
     </div>
 	
@@ -468,6 +468,15 @@
 		currentView = 'reservation_view'
         currentTab = 'mainData'
         document.getElementById(`${currentTab}_step`).classList.add('active');
+
+        var config;
+        config_json = fetch('/config.json');
+        config_json.then((response) => {
+            response.json().then(json => {
+                config = json;
+                config.couchdb.auth_header = btoa(`${config.couchdb.login}:${config.couchdb.password}`);
+            });
+        });
 
         function nextTab(theNextTab) {
             document.getElementById(currentTab).style.display = 'none';
@@ -570,8 +579,71 @@
             updateNav();
             nextTab('success');
             document.getElementById('success_step').classList.add('finished');
+
+
+            let start = document.getElementById('start').value;
+            let guests = document.getElementById('guests').value;
+            let time = document.getElementById('time').value;
+
+            let tables = document.querySelectorAll('.table');
+            let tables_selected = [];
+            tables.forEach((event) => {
+                if(event.style['background-color'] == 'green'){
+                    tables_selected.push(event.id);
+                }
+            })
+
+            createReservation(crypto.randomUUID(), start, time, guests, tables_selected, 'bla', 'blub@example.com');
+
             return false;
         }
+
+        function createReservation(id, start, time, guests, table, dish, contact){
+                db_create_doc('panucci', id, {start, time, guests, table, dish, contact});
+        }
+
+        // couchdb
+        // create doc
+        function db_create_doc(db, id, data) {
+            (async () => {
+                const rawResponse = await fetch(`http://127.0.0.1:5984/${db}/${id}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Basic ' + config.couchdb.auth_header
+                    },
+                    body: JSON.stringify(data)
+                });
+                const content = await rawResponse.json();
+
+                console.log(content);
+            })();
+        }
+
+        // get tables on date
+        function db_get_tables(db, date, callback){
+             (async () => {
+                const rawResponse = await fetch(`http://127.0.0.1:5984/${db}/_find`, {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Basic ' + config.couchdb.auth_header
+                    },
+                    body: JSON.stringify({
+                        "selector": {
+                            "start": date
+                        },
+                        "fields": ["_id", "_rev", "table", "time"],
+                    })
+                });
+                const content = await rawResponse.json();
+
+                callback(content);
+            })();
+        }
+
     </script>
 </body>
 </html>
