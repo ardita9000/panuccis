@@ -1,0 +1,6 @@
+{
+	"couchdb": {
+		"login": "LOGIN_HERE",
+		"password": "PASSWORD_HERE"
+	}
+}
