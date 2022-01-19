@@ -171,6 +171,37 @@ button:hover {
     linear-gradient(to bottom right, transparent calc(50% - var(--l) / 2), var(--color) calc(50% - var(--l) / 2) calc(50% + var(--l) / 2), transparent calc(50% + var(--l) / 2));
 }
 
+table.reservation_table {
+    border:solid 5px green;
+    margin:0px;
+    padding:0px;
+    border-spacing:0px;
+    border-collapse:collapse;
+    line-height:22px;
+    font-size:13px;
+    font-family:Arial, Verdana, Tahoma, Helvetica, sans-serif;
+    font-weight:400;
+    text-decoration:none;
+    color:black;
+    white-space:pre-wrap;
+}
+
+table.reservation_table th {
+    padding: 20px;
+    background-color:lightgreen;
+    border:solid 2px green;
+}
+
+table.reservation_table td {
+    padding: 20px;
+    border:solid 1px green;
+}
+
+table.reservation_table tr {
+    margin:0;
+    padding:4px;
+}
+
 @media only screen and (min-width: 865px) {
     .desktop-3-cols {width: 25.00%}
     .desktop-6-cols {width: 50.00%}
