@@ -10,9 +10,9 @@
 </head>
 <body>
     <div class="header" style="position:relative;">
-        <a href="home.html"><h1 style="display: inline-block;">Panucci's Pizza</h1></a>
+        <a href="home.html"><h1 style="display: inline-block;">Panucci's</h1></a>
 
-        <button id="viewButton" type="button" style="position: absolute; right: 5%; top: 50%; transform: translateY(-50%);" class="nextButton" onclick="viewChange()">Mitarbeiter-View</button>
+        <button id="viewButton" type="button" style="position: absolute; right: 5%; top: 50%; transform: translateY(-50%);" class="nextButton" onclick="viewChange()">Mitarbeiter-Login</button>
 
 
     </div>
@@ -75,8 +75,15 @@
                 </div>
 
                 <div id="table" class="tab" style="display: none;">
-                    <h3>Welche Tische möchten Sie reservieren? (optional)</h3>
-                    <p>Sie können die Reservierung auch ohne Tischauswahl abschließen. <br>Unser System weist Ihnen dann automatisch Tische zu.</p>
+
+                    <div style="overflow:auto;">
+                        <div style="float: right;">
+                            <button type="button" style="background-color: #f1f1f1; color: black" class="nextButton" onclick="document.getElementById(`${currentTab}_step`).classList.add('finished'); document.getElementById('dish_description').innerText = 'Ohne Speisen reservieren'; nextTab('dish');">Weiter ohne Auswahl > </button>
+                        </div>
+                    </div>
+
+                    <h3 id="select_tables">Welche Tische möchten Sie reservieren? (optional)</h3>
+                    <p>Sie können die Reservierung auch ohne Tischauswahl abschließen.</p>
 
                     <div class="grid-container_2">
                         <div id="table1" class="table" onclick="selectedTable()">1</div>
@@ -99,7 +106,7 @@
 
                     <div style="overflow:auto;">
                         <div style="float: right; margin-top: 50px;">
-                            <button type="button" class="nextButton" onclick="updateNav(); nextTab('dish')">Weiter</button>
+                            <button type="button" class="nextButton" onclick="selectTables()">Weiter</button>
                         </div>
                     </div>
                 </div>
@@ -109,8 +116,15 @@
 
 
                 <div id="dish" class="tab" style="display: none;">
+
+                    <div style="overflow:auto;">
+                        <div style="float: right;">
+                            <button type="button" style="background-color: #f1f1f1; color: black" class="nextButton" onclick="document.getElementById(`${currentTab}_step`).classList.add('finished'); document.getElementById('table_description').innerText = 'Ohne Tischauswahl reservieren'; nextTab('contact');">Weiter ohne Auswahl > </button>
+                        </div>
+                    </div>
+
                     <h3>Welche Speisen möchten Sie wählen? (optional)</h3>
-                    <p>Sie können die Reservierung auch ohne Auswahl von Speisen abschließen. <br> Wenn Sie Speisen auswählen, können Sie Ihre Auswahl im Restaurant ändern.</p>
+                    <p>Wenn Sie Speisen auswählen, können Sie Ihre Auswahl im Restaurant ändern.</p>
 
             <h4>Person 1</h4>
                     <label for="starter">Vorspeise:</label>
@@ -190,19 +204,19 @@
                         <h3>Geben Sie Ihre Kontaktdaten an.</h3>
     
                         <label for="firstName">Vorname:</label>
-                        <input type="text" id="firstName" onchange="updateNav()" required>
+                        <input type="text" id="firstName" placeholder="Max" onchange="updateNav()" required>
                         <br> <br> <br>
     
                         <label for="lastName">Nachname:</label>
-                        <input type="text" id="lastName" onchange="updateNav()" required>
+                        <input type="text" id="lastName" placeholder="Mustermann" onchange="updateNav()" required>
                         <br> <br> <br>
     
                         <label for="email">E-Mail-Adresse:</label>
-                        <input type="text" id="email" onchange="updateNav()" required>
+                        <input type="email" id="email" placeholder="hi@example.com" onchange="updateNav()" required>
                         <br> <br> <br>
     
                         <label for="telNumber">Telefonnummer:</label>
-                        <input type="text" id="telNumber" onchange="updateNav()" required>
+                        <input type="text" pattern="[0-9]{10}" id="telNumber" placeholder="0123456" onchange="updateNav()" required>
     
     
                         <div style="overflow:auto;">
@@ -317,6 +331,7 @@
             document.getElementById(`${theNextTab}_step`).classList.add('active');
         }
 
+
 		function viewChange() {
 			if (currentView == 'reservation_view') {
 				document.getElementById('reservation_view').style.display = 'none';
@@ -326,7 +341,7 @@
 			} else {
 				document.getElementById('reservation_view').style.display = 'flex';
 				document.getElementById('worker_view').style.display = 'none';
-				document.getElementById("viewButton").innerHTML = 'Mitarbeiter-View';
+				document.getElementById("viewButton").innerHTML = 'Mitarbeiter-Login';
 				currentView = 'reservation_view';
 				workerLogout();
 			}
@@ -378,9 +393,6 @@
                 if(tables_selected){
                     document.getElementById('table_description').innerText = 'Lieblingstisch ausgewählt'
                 }
-                else{
-                    document.getElementById('table_description').innerText = 'Ohne Tischauswahl reservieren'
-                }
             }
 
             if(currentTab == 'dish') {
@@ -388,20 +400,48 @@
                 if(Array.from(selects).some((event) => event.value != '')){
                     document.getElementById('dish_description').innerText = 'Lieblingsspeisen gewählt'
                 }
-                else{
-                    document.getElementById('dish_description').innerText = 'Ohne Speisen reservieren'
-                }
             }
         }
 
-        function selectedTable() {
+        function selectedTable(){
+
+            let tables = document.querySelectorAll('.table');
+            let green_tables = Array.from(tables).filter((table) => table.style['background-color'] == 'green');
+
+            guests = Math.ceil(document.getElementById('guests').value/2);
+
+            if(green_tables.length >= guests){
+                if(event.target.style['background-color'] == 'green'){
+                    event.target.style['background-color'] = '#deb887';
+                    return;
+                }
+                alert("Sie haben für die gewählte Personenanzahl ausreichend Tische ausgewählt");
+                return;
+            }
+
             if(event.target.style['background-color'] == 'green'){
-                event.target.style['background-color'] = '#eeeeee';     
+                event.target.style['background-color'] = '#deb887';
             }
             else {
                 event.target.style['background-color'] = 'green';                
             }
         }
+
+        function selectTables() {
+            let tables = document.querySelectorAll('.table');
+            let green_tables = Array.from(tables).filter((table) => table.style['background-color'] == 'green');
+
+            guests = Math.ceil(document.getElementById('guests').value/2);
+
+            if(green_tables.length === guests){
+                updateNav();
+                nextTab('dish');
+                return true;
+            }
+            alert("Bitte wählen Sie weitere Tische aus.");
+            return false;
+        }
+
 
         function formSubmit(e){
             e.preventDefault();
@@ -483,6 +523,10 @@
                 })
 
             });
+
+            let select_tables = document.getElementById('guests').value;
+            document.getElementById('select_tables').innerHTML = 'Wählen Sie bitte ' + Math.ceil(select_tables/2) + ' Tische aus. (optional)'
+
         }
     </script>
 </body>

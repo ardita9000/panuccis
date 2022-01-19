@@ -105,12 +105,14 @@ p {
 }
 
 .table {
-    width: 50px;
     height: 50px;
+    width: 70px;
     margin: 25px;
     padding: 5px;
-    background-color: #eeeeee;
-    border: 2px solid #aaaaaa;
+    background-color: #deb887;
+    border-left: 15px solid;
+    border-right: 15px solid;
+    border-image: linear-gradient(180deg, #FFFFFF 0%, #FFFFFF 20%, #8B4513 20%, #8B4513 80%, #FFFFFF 80%, #FFFFFF 100%) 1;
 }
 
 .grid-container {
@@ -142,33 +144,10 @@ button:hover {
     background-repeat: no-repeat;
 }
 
-.seat {
-    height: 60px;
-    width: 110px;
-    background: red;
-    position: relative;
-}
-
-.seat:before {
-    width: 50px;
-    height: 50px;
-    margin: 25px;
-    padding: 5px;
-    background-color: #eeeeee;
-    border: 2px solid #aaaaaa;
-    content: "";
-    position: absolute;
-    top: -10px;
-    left: 15px;
-}
-
 .x {
     --color: #444;
     --l: 5px; /* line-width */
-    width: 50px;
-    height: 50px;
-    background: linear-gradient(to top right, transparent calc(50% - var(--l) / 2), var(--color) calc(50% - var(--l) / 2) calc(50% + var(--l) / 2), transparent calc(50% + var(--l) / 2)),
-    linear-gradient(to bottom right, transparent calc(50% - var(--l) / 2), var(--color) calc(50% - var(--l) / 2) calc(50% + var(--l) / 2), transparent calc(50% + var(--l) / 2));
+    background: linear-gradient(to top right, #deb88700 calc(50% - var(--l) / 2), var(--color) calc(50% - var(--l) / 2) calc(50% + var(--l) / 2), #deb88700 calc(50% + var(--l) / 2)), linear-gradient(to bottom right, #deb887 calc(50% - var(--l) / 2), var(--color) calc(50% - var(--l) / 2) calc(50% + var(--l) / 2), #deb887 calc(50% + var(--l) / 2));
 }
 
 table.reservation_table {
