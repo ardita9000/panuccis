@@ -2,157 +2,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="/static/stylesheet.css">
     <title>Panucci's Pizza</title>
     <style>
-        * {
-            box-sizing: border-box;
-            padding: 5px;
-            font-family: "Lucida Sans", sans-serif;
-        }
-
-        body {
-            background-color: #f1f1f1;
-        }
-
-        .flex-container {
-            display: flex;
-            flex-wrap: wrap;
-            margin-top: 50px;
-        }
-
-        h1 {
-            font-size: 28pt;
-        }
-
-        h2 {
-            font-size: 24pt;
-        }
-
-        h3 {
-            font-size: 18pt;
-        }
-
-        p {
-            font-size: 12pt;
-        }
-
-        .header {
-            background-color: #ffffff;
-            color: dimgray;
-            padding: 5px;
-            text-align: left;
-        }
-
-        .menu {
-            background-color: #ffffff;
-            color: green;
-            padding: 10px 10px;
-            /*color: #00519e;*/
-        }
-
-        .menu > div {
-            margin-top: 18px;
-            text-align: left;
-            font-weight: bold;
-        }
-
-        .main {
-            padding: 0 20px 20px 20px;
-            line-height: 1.5em;
-            margin-left: 80px;
-            background-color: #ffffff;
-        }
-
-        .step {
-            padding: 5px 10px;
-            text-align:center;
-            border-radius: 25px;
-            background-color:dimgrey;
-            color:#ffffff;
-            line-height: 50px;
-            opacity: 0.5;
-        }
-
-        .step.active {
-            opacity: 1;
-        }
-
-        .step.finished {
-            background-color: green;
-            opacity: 1;
-        }
-
-        .step_description {
-            margin-left: 10px;
-            color: dimgrey;
-        }
-
-        .step_description:hover{
-            color: #035956;
-            opacity: 0.7;
-        }
-
-        .nextButton {
-            padding: 10px 20px;
-            background-color: #00b33c;
-            color: #ffffff;
-            border: none;
-            border-radius: 5px;
-            font-size: 12pt;
-        }
-
-        .noSelection {
-            padding: 10px 20px;
-            background-color: #ddd;
-            color: black;
-            border: none;
-            border-radius: 5px;
-            font-size: 12pt;
-        }
-
-        .table {
-            width: 50px;
-            height: 50px;
-            margin: 25px;
-            padding: 5px;
-            background-color: #eeeeee;
-            border: 2px solid #aaaaaa;
-        }
-
-        .grid-container {
-            display:  grid;
-            grid-template-columns: auto auto auto auto;
-        }
-
-        .grid-container_2 {
-            display:  grid;
-            grid-template-columns: 100px 100px 100px;
-        }
-
-        .bar {
-            grid-row-start: 2;
-            width: 350px;
-            height: 150px;
-            margin: 25px;
-            padding: 5px;
-            background-color: #eeeeee;
-            border: 2px solid #aaaaaa;
-        }
-
-        button:hover {
-            opacity: 0.7;
-        }
-
-        @media only screen and (min-width: 865px) {
-            .desktop-3-cols {width: 25.00%}
-            .desktop-6-cols {width: 50.00%}
-        }
 
     </style>
 </head>
 <body>
     <div class="header">
-        <h1>Panucci's Pizza</h1>
+        <a href="home.html"><h1>Panucci's</h1></a>
     </div>
     <div class="flex-container">
         <div class="menu desktop-3-cols">
@@ -375,7 +233,9 @@
         function nextTab(theNextTab) {
             document.getElementById(currentTab).style.display = 'none';
             document.getElementById(`${currentTab}_step`).classList.remove('active');
-
+            if(theNextTab==='table') {
+                db_get_reservations("panucci", document.getElementById('start').value, cross_reserved_tables)
+            }
             currentTab = theNextTab;
 
             document.getElementById(theNextTab).style.display = 'block';
@@ -472,8 +332,8 @@
             })();
         }
 
-        // get tables on date
-        function db_get_tables(db, date, callback){
+        // get reservations on date
+        function db_get_reservations(db, date, callback){
              (async () => {
                 const rawResponse = await fetch(`http://127.0.0.1:5984/${db}/_find`, {
                     method: 'POST',
@@ -495,6 +355,17 @@
             })();
         }
 
+        function cross_reserved_tables(reservations) {
+            reservations.docs.forEach(function(reservation){
+
+                reservation.table.forEach(function (table){
+                    const table_element = document.getElementById(table);
+                    table_element.classList.add('x');
+                    table_element.onclick = undefined;
+                })
+
+            });
+        }
     </script>
 </body>
 </html>
