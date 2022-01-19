@@ -9,10 +9,14 @@
     </style>
 </head>
 <body>
-    <div class="header">
-        <a href="home.html"><h1>Panucci's</h1></a>
+    <div class="header" style="position:relative;">
+        <a href="home.html"><h1 style="display: inline-block;">Panucci's Pizza</h1></a>
+
+        <button id="viewButton" type="button" style="position: absolute; right: 5%; top: 50%; transform: translateY(-50%);" class="nextButton" onclick="viewChange()">Mitarbeiter-View</button>
+
+
     </div>
-    <div class="flex-container">
+    <div id="reservation_view" class="flex-container">
         <div class="menu desktop-3-cols">
             <div style="font-size:24pt">Tisch-Reservierung</div>
             <div>
@@ -100,6 +104,7 @@
                     </div>
                 </div>
             </form>
+
 
 
 
@@ -217,7 +222,77 @@
         </div>
     </div>
 
+	<div id="worker_view" class="flex-container" style="display: none;">
+		<div class="menu desktop-4-cols">
+
+			<div id="workerLogin">
+				<h2> MITARBEITER LOGIN</h2>
+				<label for="username">Username:</label>
+				<input type="text" id="username" onchange="updateNav()" required>
+				<label for="password">Password:</label>
+				<input type="text" id="password" onchange="updateNav()" required>
+				<button id="loginButton" type="button"  class="nextButton" onclick="workerLogin()">Login</button>
+			</div>
+
+			<div id="workerOverview" style=" display: none;">
+
+				<div style="position: relative;">
+					<h1 style="display: inline-block;"> Übersicht aller Reservierungen </h1>
+					<button id="logoutButton" type="button" style="position: absolute; right: 5%; top: 10%; transform: translateY(-50%);"  class="nextButton" onclick="workerLogout()">Logout</button>
+				</div>
+				<div>
+					<button id="workerPrevButton" type="button" disabled onclick="workerPrevDate()"><--</button>
+					<label id="workerDate">18.01.22 (heute)</label>
+					<button id="workerNextButton" type="button"  onclick="workerNextDate()">--></button>
+				</div>
+
+				<table id="first" class="reservation_table">
+					<col width="100px" />
+					<col width="100px" />
+					<col width="400px" />
+					<tr>
+						<th>Anzahl Personen</th>
+						<th>Uhrzeit</th>
+						<th>Kontaktdaten</th>
+					</tr>
+					<tr>
+						<td>5</td>
+						<td>18:00</td>
+						<td>Mustermann, Max, max@musterman.de, 1234567</td>
+					</tr>
+					<tr>
+						<td>2</td>
+						<td>19:00</td>
+						<td>Musterfrau, Erika, erika@musterfrau.de, 7654321</td>
+					</tr>
+					<tr>
+						<td>10</td>
+						<td>20:30</td>
+						<td>Müller, Olaf, Olaf@Müller.de, 7654321</td>
+					</tr>
+				</table>
+
+				<table id="second" style="display: none" class="reservation_table">
+					<col width="100px" />
+					<col width="100px" />
+					<col width="400px" />
+					<tr>
+						<th>Anzahl Personen</th>
+						<th>Uhrzeit</th>
+						<th>Kontaktdaten</th>
+					</tr>
+					<tr>
+						<td>5</td>
+						<td>21:00</td>
+						<td>Bauer, Hans, hans@bauer.de, 7483543</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+
     <script>
+		currentView = 'reservation_view'
         currentTab = 'mainData'
         document.getElementById(`${currentTab}_step`).classList.add('active');
 
@@ -241,6 +316,49 @@
             document.getElementById(theNextTab).style.display = 'block';
             document.getElementById(`${theNextTab}_step`).classList.add('active');
         }
+
+		function viewChange() {
+			if (currentView == 'reservation_view') {
+				document.getElementById('reservation_view').style.display = 'none';
+				document.getElementById('worker_view').style.display = 'flex';
+				document.getElementById("viewButton").innerHTML = 'Reservieren';
+				currentView = 'worker_view';
+			} else {
+				document.getElementById('reservation_view').style.display = 'flex';
+				document.getElementById('worker_view').style.display = 'none';
+				document.getElementById("viewButton").innerHTML = 'Mitarbeiter-View';
+				currentView = 'reservation_view';
+				workerLogout();
+			}
+		}
+
+		function workerLogin() {
+			document.getElementById('workerLogin').style.display = 'none';
+			document.getElementById('workerOverview').style.display = 'inline';
+		}
+
+		function workerLogout() {
+			document.getElementById('workerLogin').style.display = 'inline';
+			document.getElementById('workerOverview').style.display = 'none';
+			document.getElementById("username").value = '';
+			document.getElementById("password").value = '';
+		}
+
+		function workerNextDate() {
+			document.getElementById('workerPrevButton').disabled = false;
+			document.getElementById('workerNextButton').disabled = true;
+			document.getElementById('workerDate').innerHTML = '19.01.22'
+			document.getElementById('second').style.display = "table";
+			document.getElementById('first').style.display = 'none';
+		}
+
+		function workerPrevDate() {
+			document.getElementById('workerPrevButton').disabled = true;
+			document.getElementById('workerNextButton').disabled = false;
+			document.getElementById('workerDate').innerHTML = '18.01.22 (heute)'
+			document.getElementById('first').style.display = "table";
+			document.getElementById('second').style.display = 'none';
+		}
 
         function updateNav(){
             guests = document.getElementById('guests').value;
