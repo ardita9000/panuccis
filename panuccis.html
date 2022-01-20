@@ -9,12 +9,8 @@
     </style>
 </head>
 <body>
-    <div class="header" style="position:relative;">
+    <div class="header">
         <a href="home.html"><h1 style="display: inline-block;">Panucci's</h1></a>
-
-        <button id="viewButton" type="button" style="position: absolute; right: 5%; top: 50%; transform: translateY(-50%);" class="nextButton" onclick="viewChange()">Mitarbeiter-Login</button>
-
-
     </div>
     <div id="reservation_view" class="flex-container">
         <div class="menu desktop-3-cols">
@@ -31,42 +27,43 @@
         <div class="main desktop-6-cols">
             <form id="reservation_form" action="">
                 <div id="mainData" class="tab">
-                <h3>Für wie viele Personen möchten Sie reservieren?</h3>
-                    <label for="guests">Anzahl Personen:</label>
-                    <select name="guests" id="guests" onchange="updateNav()">
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                        <option value="7">7</option>
-                        <option value="8">8</option>
-                        <option value="9">9</option>
-                        <option value="10">10</option>
-                    </select>
-
-                <h3>An welchem Tag möchten Sie reservieren?</h3>
-                    <label for="start">Datum:</label>
-                    <input type="date" id="start" max="2022-12-31" onchange="updateNav()">
-                    <script>
-                        document.getElementById('start').min = new Date().toISOString().split('T')[0];
-                        document.getElementById('start').value = new Date().toISOString().split('T')[0];
-                    </script>
-
-                <h3>Um wie viel Uhr möchten Sie reservieren?</h3>
-                    <label for="time">Uhrzeit:</label>
-                    <select name="time" id="time" onchange="updateNav()">
-                        <option value="18:00">18:00</option>
-                        <option value="18:30">18:30</option>
-                        <option value="19:00">19:00</option>
-                        <option value="19:30">19:30</option>
-                        <option value="20:00">20:00</option>
-                        <option value="20:30">20:30</option>
-                        <option value="21:00">21:00</option>
-                        <option value="21:30">21:30</option>
-                    </select>
-
+                <h3>Bitte wählen Sie Ihre Reservierungsdaten aus.</h3>
+                    <div style="margin-bottom: 50px">
+                        <label for="guests">Anzahl Personen:</label>
+                        <select name="guests" id="guests" onchange="updateNav()">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                        </select>
+                    </div>
+                    <div style="margin-bottom: 50px">
+                        <label for="start">Datum:</label>
+                        <input type="date" id="start" max="2022-12-31" onchange="updateNav()">
+                        <script>
+                            document.getElementById('start').min = new Date().toISOString().split('T')[0];
+                            document.getElementById('start').value = new Date().toISOString().split('T')[0];
+                        </script>
+                    </div>
+                    <div>
+                        <label for="time">Uhrzeit:</label>
+                        <select name="time" id="time" onchange="updateNav()">
+                            <option value="18:00">18:00</option>
+                            <option value="18:30">18:30</option>
+                            <option value="19:00">19:00</option>
+                            <option value="19:30">19:30</option>
+                            <option value="20:00">20:00</option>
+                            <option value="20:30">20:30</option>
+                            <option value="21:00">21:00</option>
+                            <option value="21:30">21:30</option>
+                        </select>
+                    </div>
                     <div style="overflow:auto;">
                         <div style="float: right; margin-top: 50px;">
                             <button type="button" class="nextButton" onclick="updateNav(); nextTab('table')">Weiter</button>
@@ -78,31 +75,68 @@
 
                     <div style="overflow:auto;">
                         <div style="float: right;">
-                            <button type="button" style="background-color: #f1f1f1; color: black" class="nextButton" onclick="document.getElementById(`${currentTab}_step`).classList.add('finished'); document.getElementById('dish_description').innerText = 'Ohne Speisen reservieren'; nextTab('dish');">Weiter ohne Auswahl > </button>
+                            <button type="button" style="background-color: #f1f1f1; color: black" class="nextButton" onclick="document.getElementById(`${currentTab}_step`).classList.add('finished'); document.getElementById('table_description').innerText = 'Ohne Tischauswahl reservieren'; nextTab('dish');">Weiter ohne Auswahl > </button>
                         </div>
                     </div>
 
                     <h3 id="select_tables">Welche Tische möchten Sie reservieren? (optional)</h3>
                     <p>Sie können die Reservierung auch ohne Tischauswahl abschließen.</p>
 
+
+
                     <div class="grid-container_2">
-                        <div id="table1" class="table" onclick="selectedTable()">1</div>
-                        <div id="table2" class="table" onclick="selectedTable()">2</div>
-                        <div id="table3" class="table" onclick="selectedTable()">3</div>
+                        <div class="table-placeholder-2">
+                            <div id="table1" class="table table-horizontal" onclick="selectedTable()" draggable="true" ondragstart="drag(event)">1</div>
+                        </div>
+
+                        <div class="grid-container_3">
+                            <div id="target5" class="target-area-2" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+
+                            <div id="table2" class="table table-horizontal" onclick="selectedTable()" draggable="true" ondragstart="drag(event)">2</div>
+
+                            <div id="target6" class="target-area-2" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                        </div>
+
+                        <div class="table-placeholder-2">
+                            <div id="table3" class="table table-horizontal" onclick="selectedTable()" draggable="true" ondragstart="drag(event)">3</div>
+                        </div>
+                    </div>
+
+                    <div>
                         <div class="bar">Theke</div>
                     </div>
 
                     <div class="grid-container">
-                        <div id="table4" class="table" onclick="selectedTable()">4</div>
-                        <div id="table5" class="table" onclick="selectedTable()">5</div>
-                        <div id="table6" class="table" onclick="selectedTable()">6</div>
-                        <div id="table7" class="table" onclick="selectedTable()">7</div>
-                        <div id="table8" class="table" onclick="selectedTable()">8</div>
-                        <div id="table9" class="table" onclick="selectedTable()">9</div>
-                        <div id="table10" class="table" onclick="selectedTable()">10</div>
-                        <div id="table11" class="table" onclick="selectedTable()">11</div>
+                        <div class="table-placeholder">
+                            <div id="table4" class="table table-vertical" onclick="selectedTable()" draggable="true" ondragstart="drag(event)">4</div>
+                        </div>
+                        <div class="table-placeholder">
+                            <div id="table5" class="table table-vertical" onclick="selectedTable()" draggable="true" ondragstart="drag(event)">5</div>
+                        </div>
+                        <div class="table-placeholder">
+                            <div id="table6" class="table table-vertical" onclick="selectedTable()" draggable="true" ondragstart="drag(event)">6</div>
+                        </div>
+                        <div class="table-placeholder">
+                            <div id="table7" class="table table-vertical" onclick="selectedTable()" draggable="true" ondragstart="drag(event)">7</div>
+                        </div>
+
+                        <div id="target1" class="target-area" ondrop="drop(event)" ondragover="allowDrop(event)">
+                            <div class="table-placeholder"></div>
+                            <div id="table8" class="table table-vertical" onclick="selectedTable()">8</div>
+                        </div>
+                        <div id="target2" class="target-area" ondrop="drop(event)" ondragover="allowDrop(event)">
+                            <div class="table-placeholder"></div>
+                            <div id="table9" class="table table-vertical" onclick="selectedTable()">9</div>
+                        </div>
+                        <div id="target3" class="target-area" ondrop="drop(event)" ondragover="allowDrop(event)">
+                            <div class="table-placeholder"></div>
+                            <div id="table10" class="table table-vertical" onclick="selectedTable()">10</div>
+                        </div>
+                        <div id="target4" class="target-area" ondrop="drop(event)" ondragover="allowDrop(event)">
+                            <div class="table-placeholder"></div>
+                            <div id="table11" class="table table-vertical" onclick="selectedTable()">11</div>
+                        </div>
                     </div>
-                    
 
                     <div style="overflow:auto;">
                         <div style="float: right; margin-top: 50px;">
@@ -119,11 +153,11 @@
 
                     <div style="overflow:auto;">
                         <div style="float: right;">
-                            <button type="button" style="background-color: #f1f1f1; color: black" class="nextButton" onclick="document.getElementById(`${currentTab}_step`).classList.add('finished'); document.getElementById('table_description').innerText = 'Ohne Tischauswahl reservieren'; nextTab('contact');">Weiter ohne Auswahl > </button>
+                            <button type="button" style="background-color: #f1f1f1; color: black" class="nextButton" onclick="document.getElementById(`${currentTab}_step`).classList.add('finished'); document.getElementById('dish_description').innerText = 'Ohne Speisen reservieren'; nextTab('contact');">Weiter ohne Auswahl > </button>
                         </div>
                     </div>
 
-                    <h3>Welche Speisen möchten Sie wählen? (optional)</h3>
+                    <h3>Wählen Sie Ihre Speisen aus. (optional)</h3>
                     <p>Wenn Sie Speisen auswählen, können Sie Ihre Auswahl im Restaurant ändern.</p>
 
             <h4>Person 1</h4>
@@ -216,7 +250,7 @@
                         <br> <br> <br>
     
                         <label for="telNumber">Telefonnummer:</label>
-                        <input type="text" pattern="[0-9]{10}" id="telNumber" placeholder="0123456" onchange="updateNav()" required>
+                        <input type="text" pattern="[0-9]{5}" id="telNumber" placeholder="01234" onchange="updateNav()" required>
     
     
                         <div style="overflow:auto;">
@@ -236,298 +270,6 @@
         </div>
     </div>
 
-	<div id="worker_view" class="flex-container" style="display: none;">
-		<div class="menu desktop-4-cols">
-
-			<div id="workerLogin">
-				<h2> MITARBEITER LOGIN</h2>
-				<label for="username">Username:</label>
-				<input type="text" id="username" onchange="updateNav()" required>
-				<label for="password">Password:</label>
-				<input type="text" id="password" onchange="updateNav()" required>
-				<button id="loginButton" type="button"  class="nextButton" onclick="workerLogin()">Login</button>
-			</div>
-
-			<div id="workerOverview" style=" display: none;">
-
-				<div style="position: relative;">
-					<h1 style="display: inline-block;"> Übersicht aller Reservierungen </h1>
-					<button id="logoutButton" type="button" style="position: absolute; right: 5%; top: 10%; transform: translateY(-50%);"  class="nextButton" onclick="workerLogout()">Logout</button>
-				</div>
-				<div>
-					<button id="workerPrevButton" type="button" disabled onclick="workerPrevDate()"><--</button>
-					<label id="workerDate">18.01.22 (heute)</label>
-					<button id="workerNextButton" type="button"  onclick="workerNextDate()">--></button>
-				</div>
-
-				<table id="first" class="reservation_table">
-					<col width="100px" />
-					<col width="100px" />
-					<col width="400px" />
-					<tr>
-						<th>Anzahl Personen</th>
-						<th>Uhrzeit</th>
-						<th>Kontaktdaten</th>
-					</tr>
-					<tr>
-						<td>5</td>
-						<td>18:00</td>
-						<td>Mustermann, Max, max@musterman.de, 1234567</td>
-					</tr>
-					<tr>
-						<td>2</td>
-						<td>19:00</td>
-						<td>Musterfrau, Erika, erika@musterfrau.de, 7654321</td>
-					</tr>
-					<tr>
-						<td>10</td>
-						<td>20:30</td>
-						<td>Müller, Olaf, Olaf@Müller.de, 7654321</td>
-					</tr>
-				</table>
-
-				<table id="second" style="display: none" class="reservation_table">
-					<col width="100px" />
-					<col width="100px" />
-					<col width="400px" />
-					<tr>
-						<th>Anzahl Personen</th>
-						<th>Uhrzeit</th>
-						<th>Kontaktdaten</th>
-					</tr>
-					<tr>
-						<td>5</td>
-						<td>21:00</td>
-						<td>Bauer, Hans, hans@bauer.de, 7483543</td>
-					</tr>
-				</table>
-			</div>
-		</div>
-	</div>
-
-    <script>
-		currentView = 'reservation_view'
-        currentTab = 'mainData'
-        document.getElementById(`${currentTab}_step`).classList.add('active');
-
-        var config;
-        config_json = fetch('/config.json');
-        config_json.then((response) => {
-            response.json().then(json => {
-                config = json;
-                config.couchdb.auth_header = btoa(`${config.couchdb.login}:${config.couchdb.password}`);
-            });
-        });
-
-        function nextTab(theNextTab) {
-            document.getElementById(currentTab).style.display = 'none';
-            document.getElementById(`${currentTab}_step`).classList.remove('active');
-            if(theNextTab==='table') {
-                db_get_reservations("panucci", document.getElementById('start').value, cross_reserved_tables)
-            }
-            currentTab = theNextTab;
-
-            document.getElementById(theNextTab).style.display = 'block';
-            document.getElementById(`${theNextTab}_step`).classList.add('active');
-        }
-
-
-		function viewChange() {
-			if (currentView == 'reservation_view') {
-				document.getElementById('reservation_view').style.display = 'none';
-				document.getElementById('worker_view').style.display = 'flex';
-				document.getElementById("viewButton").innerHTML = 'Reservieren';
-				currentView = 'worker_view';
-			} else {
-				document.getElementById('reservation_view').style.display = 'flex';
-				document.getElementById('worker_view').style.display = 'none';
-				document.getElementById("viewButton").innerHTML = 'Mitarbeiter-Login';
-				currentView = 'reservation_view';
-				workerLogout();
-			}
-		}
-
-		function workerLogin() {
-			document.getElementById('workerLogin').style.display = 'none';
-			document.getElementById('workerOverview').style.display = 'inline';
-		}
-
-		function workerLogout() {
-			document.getElementById('workerLogin').style.display = 'inline';
-			document.getElementById('workerOverview').style.display = 'none';
-			document.getElementById("username").value = '';
-			document.getElementById("password").value = '';
-		}
-
-		function workerNextDate() {
-			document.getElementById('workerPrevButton').disabled = false;
-			document.getElementById('workerNextButton').disabled = true;
-			document.getElementById('workerDate').innerHTML = '19.01.22'
-			document.getElementById('second').style.display = "table";
-			document.getElementById('first').style.display = 'none';
-		}
-
-		function workerPrevDate() {
-			document.getElementById('workerPrevButton').disabled = true;
-			document.getElementById('workerNextButton').disabled = false;
-			document.getElementById('workerDate').innerHTML = '18.01.22 (heute)'
-			document.getElementById('first').style.display = "table";
-			document.getElementById('second').style.display = 'none';
-		}
-
-        function updateNav(){
-            guests = document.getElementById('guests').value;
-            date = document.getElementById('start').value;
-            time = document.getElementById('time').value;
-            document.getElementById('description').innerText = guests + ' Personen, ' + date + ', ' + time + 'Uhr';
-            document.getElementById(`${currentTab}_step`).classList.add('finished');
-
-            if(currentTab == 'table') {
-                let tables = document.querySelectorAll('.table');
-                let tables_selected = false;
-                tables.forEach((event) => {
-                    if(event.style['background-color'] == 'green'){
-                        tables_selected = true;
-                    }
-                })
-                if(tables_selected){
-                    document.getElementById('table_description').innerText = 'Lieblingstisch ausgewählt'
-                }
-            }
-
-            if(currentTab == 'dish') {
-                selects = document.querySelectorAll('#dish > select');
-                if(Array.from(selects).some((event) => event.value != '')){
-                    document.getElementById('dish_description').innerText = 'Lieblingsspeisen gewählt'
-                }
-            }
-        }
-
-        function selectedTable(){
-
-            let tables = document.querySelectorAll('.table');
-            let green_tables = Array.from(tables).filter((table) => table.style['background-color'] == 'green');
-
-            guests = Math.ceil(document.getElementById('guests').value/2);
-
-            if(green_tables.length >= guests){
-                if(event.target.style['background-color'] == 'green'){
-                    event.target.style['background-color'] = '#deb887';
-                    return;
-                }
-                alert("Sie haben für die gewählte Personenanzahl ausreichend Tische ausgewählt");
-                return;
-            }
-
-            if(event.target.style['background-color'] == 'green'){
-                event.target.style['background-color'] = '#deb887';
-            }
-            else {
-                event.target.style['background-color'] = 'green';                
-            }
-        }
-
-        function selectTables() {
-            let tables = document.querySelectorAll('.table');
-            let green_tables = Array.from(tables).filter((table) => table.style['background-color'] == 'green');
-
-            guests = Math.ceil(document.getElementById('guests').value/2);
-
-            if(green_tables.length === guests){
-                updateNav();
-                nextTab('dish');
-                return true;
-            }
-            alert("Bitte wählen Sie weitere Tische aus.");
-            return false;
-        }
-
-
-        function formSubmit(e){
-            e.preventDefault();
-            updateNav();
-            nextTab('success');
-            document.getElementById('success_step').classList.add('finished');
-
-
-            let start = document.getElementById('start').value;
-            let guests = document.getElementById('guests').value;
-            let time = document.getElementById('time').value;
-
-            let tables = document.querySelectorAll('.table');
-            let tables_selected = [];
-            tables.forEach((event) => {
-                if(event.style['background-color'] == 'green'){
-                    tables_selected.push(event.id);
-                }
-            })
-
-            createReservation(crypto.randomUUID(), start, time, guests, tables_selected, 'bla', 'blub@example.com');
-
-            return false;
-        }
-
-        function createReservation(id, start, time, guests, table, dish, contact){
-                db_create_doc('panucci', id, {start, time, guests, table, dish, contact});
-        }
-
-        // couchdb
-        // create doc
-        function db_create_doc(db, id, data) {
-            (async () => {
-                const rawResponse = await fetch(`http://127.0.0.1:5984/${db}/${id}`, {
-                    method: 'PUT',
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json',
-                        'Authorization': 'Basic ' + config.couchdb.auth_header
-                    },
-                    body: JSON.stringify(data)
-                });
-                const content = await rawResponse.json();
-
-                console.log(content);
-            })();
-        }
-
-        // get reservations on date
-        function db_get_reservations(db, date, callback){
-             (async () => {
-                const rawResponse = await fetch(`http://127.0.0.1:5984/${db}/_find`, {
-                    method: 'POST',
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json',
-                        'Authorization': 'Basic ' + config.couchdb.auth_header
-                    },
-                    body: JSON.stringify({
-                        "selector": {
-                            "start": date
-                        },
-                        "fields": ["_id", "_rev", "table", "time"],
-                    })
-                });
-                const content = await rawResponse.json();
-
-                callback(content);
-            })();
-        }
-
-        function cross_reserved_tables(reservations) {
-            reservations.docs.forEach(function(reservation){
-
-                reservation.table.forEach(function (table){
-                    const table_element = document.getElementById(table);
-                    table_element.classList.add('x');
-                    table_element.onclick = undefined;
-                })
-
-            });
-
-            let select_tables = document.getElementById('guests').value;
-            document.getElementById('select_tables').innerHTML = 'Wählen Sie bitte ' + Math.ceil(select_tables/2) + ' Tische aus. (optional)'
-
-        }
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>

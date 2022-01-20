@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/static/stylesheet.css">
+    <title>Mitarbeiter-Login</title>
+</head>
+<body>
+    <div class="header">
+        <a href="home.html"><h1>Panucci's</h1></a>
+        <div style="overflow: auto">
+            <button id="logoutButton" type="button" style="display: none; position: absolute; right: 5%; top: 52px; color: black; background-color: #f1f1f1; border: solid 1px; border-radius: 0" class="nextButton" onclick="workerLogout()">Logout</button>
+        </div>
+    </div>
+
+    <div id="worker_view" class="flex-container">
+        <div class="menu desktop-12-cols" style="min-height:400px;">
+
+            <div id="workerLogin"">
+                <h2> MITARBEITER LOGIN</h2>
+                <label for="username">Username:</label>
+                <input type="text" id="username" onchange="updateNav()" required>
+                <label for="password">Password:</label>
+                <input type="text" id="password" onchange="updateNav()" required>
+                <button id="loginButton" type="button"  class="nextButton" onclick="workerLogin()" >Login</button>
+            </div>
+
+            <div id="workerOverview" style=" display: none;">
+
+                <div>
+                    <h1 style="display: inline-block;"> Übersicht aller Reservierungen </h1>
+                    <!--<button id="logoutButton" type="button" style="position: absolute; right: 5%; top: 10%; transform: translateY(-50%);"  class="nextButton" onclick="workerLogout()">Logout</button> -->
+                </div>
+                <div>
+                    <button id="workerPrevButton" type="button" disabled onclick="workerPrevDate()"><--</button>
+                    <label id="workerDate">18.01.22 (heute)</label>
+                    <button id="workerNextButton" type="button"  onclick="workerNextDate()">--></button>
+                </div>
+
+                <table id="first" class="reservation_table">
+                    <col width="100px" />
+                    <col width="100px" />
+                    <col width="400px" />
+                    <tr>
+                        <th>Anzahl Personen</th>
+                        <th>Uhrzeit</th>
+                        <th>Kontaktdaten</th>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>18:00</td>
+                        <td>Mustermann, Max, max@musterman.de, 1234567</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>19:00</td>
+                        <td>Musterfrau, Erika, erika@musterfrau.de, 7654321</td>
+                    </tr>
+                    <tr>
+                        <td>10</td>
+                        <td>20:30</td>
+                        <td>Müller, Olaf, Olaf@Müller.de, 7654321</td>
+                    </tr>
+                </table>
+
+                <table id="second" style="display: none" class="reservation_table">
+                    <col width="100px" />
+                    <col width="100px" />
+                    <col width="400px" />
+                    <tr>
+                        <th>Anzahl Personen</th>
+                        <th>Uhrzeit</th>
+                        <th>Kontaktdaten</th>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>21:00</td>
+                        <td>Bauer, Hans, hans@bauer.de, 7483543</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+<script src="script.js"></script>
+</body>
+</html>

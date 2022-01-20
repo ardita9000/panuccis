@@ -30,6 +30,10 @@ p {
     font-size: 12pt;
 }
 
+a, a:visited {
+    color: inherit;
+}
+
 .header {
     background-color: #ffffff;
     color: dimgray;
@@ -105,14 +109,36 @@ p {
 }
 
 .table {
-    height: 50px;
-    width: 70px;
-    margin: 25px;
     padding: 5px;
     background-color: #deb887;
+}
+
+.table-vertical {
+    height: 50px;
+    width: 70px;
     border-left: 15px solid;
     border-right: 15px solid;
     border-image: linear-gradient(180deg, #FFFFFF 0%, #FFFFFF 20%, #8B4513 20%, #8B4513 80%, #FFFFFF 80%, #FFFFFF 100%) 1;
+}
+
+.table-horizontal {
+    height: 70px;
+    width: 50px;
+    border-top: 15px solid;
+    border-bottom: 15px solid;
+    border-image: linear-gradient(90deg, #FFFFFF 0%, #FFFFFF 20%, #8B4513 20%, #8B4513 80%, #FFFFFF 80%, #FFFFFF 100%) 1;
+}
+
+.table-placeholder {
+    height: 50px;
+    width: 70px;
+    padding: 0;
+}
+
+.table-placeholder-2 {
+    height: 70px;
+    width: 50px;
+    padding: 0;
 }
 
 .grid-container {
@@ -122,7 +148,16 @@ p {
 
 .grid-container_2 {
     display:  grid;
-    grid-template-columns: 100px 100px 100px;
+    grid-template-columns: 20% auto 20%;
+    width: 300px;
+    padding: 0;
+}
+
+.grid-container_3 {
+    display:  grid;
+    width: 150px;
+    grid-template-columns: auto auto auto;
+    padding: 0;
 }
 
 .bar {
@@ -148,6 +183,18 @@ button:hover {
     --color: #444;
     --l: 5px; /* line-width */
     background: linear-gradient(to top right, #deb88700 calc(50% - var(--l) / 2), var(--color) calc(50% - var(--l) / 2) calc(50% + var(--l) / 2), #deb88700 calc(50% + var(--l) / 2)), linear-gradient(to bottom right, #deb887 calc(50% - var(--l) / 2), var(--color) calc(50% - var(--l) / 2) calc(50% + var(--l) / 2), #deb887 calc(50% + var(--l) / 2));
+}
+
+.target-area {
+    width: 100px;
+    height: 100px;
+    padding: 0;
+}
+
+.target-area-2 {
+    width: 50px;
+    height: 70px;
+    padding:0;
 }
 
 table.reservation_table {
@@ -184,5 +231,6 @@ table.reservation_table tr {
 @media only screen and (min-width: 865px) {
     .desktop-3-cols {width: 25.00%}
     .desktop-6-cols {width: 50.00%}
+    .desktop-9-cols {width: 75.00%}
     .desktop-12-cols {width: 100.00%}
 }
