@@ -88,7 +88,7 @@
     document.getElementById('table_description').innerText = 'Lieblingstisch ausgewählt'
 }
 }
-
+	
     if(currentTab == 'dish') {
     selects = document.querySelectorAll('#dish > select');
     if(Array.from(selects).some((event) => event.value != '')){
@@ -96,6 +96,19 @@
 }
 }
 }
+
+	function updateMaxDish(){
+		var selectDish = document.getElementsByClassName("selectDish");
+		var contents;
+
+		for (let i = 0; i <= document.getElementById('guests').value; i++) {
+			contents += "<option>" + i + "</option>";
+		}
+
+		for (let i = 0; i < selectDish.length; i++) {
+			selectDish[i].innerHTML = contents;
+		}
+	}
 
     function selectedTable(){
 
@@ -135,6 +148,7 @@
     alert("Bitte wählen Sie weitere Tische aus.");
     return false;
 }
+
 
 
     function formSubmit(e){
