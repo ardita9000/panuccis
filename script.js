@@ -1,3 +1,4 @@
+    currentView = 'reservation_view'
 currentView = 'reservation_view'
 currentTab = 'mainData'
 document.getElementById(`${currentTab}_step`).classList.add('active');
@@ -102,6 +103,19 @@ function updateNav() {
     }
 }
 
+function updateMaxDish(){
+		var selectDish = document.getElementsByClassName("selectDish");
+		var contents;
+
+		for (let i = 0; i <= document.getElementById('guests').value; i++) {
+			contents += "<option>" + i + "</option>";
+		}
+
+		for (let i = 0; i < selectDish.length; i++) {
+			selectDish[i].innerHTML = contents;
+		}
+	}
+    
 function selectedTable() {
 
     let tables = document.querySelectorAll('.table-position > img');

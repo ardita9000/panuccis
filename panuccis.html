@@ -38,7 +38,7 @@
                 <h3>Bitte wählen Sie Ihre Reservierungsdaten aus.</h3>
                 <div style="margin-bottom: 50px; ">
                     <label for="guests">Anzahl Personen:</label>
-                    <select name="guests" id="guests" onchange="updateNav()">
+                        <select name="guests" id="guests" onchange="updateNav(); updateMaxDish()">
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
@@ -260,73 +260,89 @@
                 </button>
             </div>
 
-            <p>Wenn Sie Speisen auswählen, können Sie Ihre Auswahl im Restaurant ändern.</p>
+                    <p>Wenn Sie Speisen auswählen, können Sie Ihre Auswahl im Restaurant ändern.</p>
 
-            <h4>Person 1</h4>
-            <label for="starter">Vorspeise:</label>
-            <select name="starter" id="starter" onchange="updateNav()">
-                <option value="">Vorspeise wählen</option>
-                <option value="Mozzarella Tartufata">Mozzarella Tartufata</option>
-                <option value="Tartar di Tonno">Tartar di Tonno</option>
-                <option value="Trota Salmonata agli Spinaci">Trota Salmonata agli Spinaci</option>
-                <option value="Carpaccio di Capesante e Gamberetti">Carpaccio di Capesante e Gamberetti</option>
-                <option value="Parmigiana di Melanzane">Parmigiana di Melanzane</option>
-                <option value="Carpaccio di Manzo">Carpaccio di Manzo</option>
-            </select>
-
-            <div></div>
-
-            <label for="main_course">Hauptspeise:</label>
-            <select name="main_course" id="main_course" onchange="updateNav()">
-                <option value="">Hauptspeise wählen</option>
-                <option value="Tagliolini alla Parmigiana">Tagliolini alla Parmigiana</option>
-                <option value="Tagliolini Porcini e Pancetta">Tagliolini Porcini e Pancetta</option>
-                <option value="Spaghetti Gallo Nero">Spaghetti Gallo Nero</option>
-                <option value="Pizza Speciale">Pizza Speciale</option>
-            </select>
-
-            <div></div>
-
-            <label for="dessert">Dessert:</label>
-            <select name="dessert" id="dessert" onchange="updateNav()">
-                <option value="">Dessert wählen</option>
-                <option value="Tiramisù">Tiramisù</option>
-                <option value="Creme Brulée">Creme Brulée</option>
-                <option value="Panna Cotta">Panna Cotta</option>
-            </select>
-
-            <h4>Person 2</h4>
-            <label for="starter">Vorspeise:</label>
-            <select name="starter" id="starter" onchange="updateNav()">
-                <option value="">Vorspeise wählen</option>
-                <option value="Mozzarella Tartufata">Mozzarella Tartufata</option>
-                <option value="Tartar di Tonno">Tartar di Tonno</option>
-                <option value="Trota Salmonata agli Spinaci">Trota Salmonata agli Spinaci</option>
-                <option value="Carpaccio di Capesante e Gamberetti">Carpaccio di Capesante e Gamberetti</option>
-                <option value="Parmigiana di Melanzane">Parmigiana di Melanzane</option>
-                <option value="Carpaccio di Manzo">Carpaccio di Manzo</option>
-            </select>
-
-            <div></div>
-
-            <label for="main_course">Hauptspeise:</label>
-            <select name="main_course" id="main_course" onchange="updateNav()">
-                <option value="">Hauptspeise wählen</option>
-                <option value="Tagliolini alla Parmigiana">Tagliolini alla Parmigiana</option>
-                <option value="Tagliolini Porcini e Pancetta">Tagliolini Porcini e Pancetta</option>
-                <option value="Spaghetti Gallo Nero">Spaghetti Gallo Nero</option>
-                <option value="Pizza Speciale">Pizza Speciale</option>
-            </select>
-
-            <div></div>
-
-            <label for="dessert">Dessert:</label>
-            <select name="dessert" id="dessert" onchange="updateNav()">
-                <option value="">Dessert wählen</option>
-                <option value="Tiramisù">Tiramisù</option>
-                <option value="Creme Brulée">Creme Brulée</option>
-                <option value="Panna Cotta">Panna Cotta</option>
-            </select>
+					<table id="member_table" class="reservation_table">
+					<tr>
+						<th>Gericht</th>
+						<th>Preis</th>
+						<th>Anzahl</th>
+					</tr>
+					<tr>
+						<td><b>Vorspeisen</b></td>
+					</tr>
+					<tr>
+						<td>Mozzarella Tartufata</td>
+						<td>5,99€</td>
+						<td><select name="age" class="selectDish"><option>0</option><option>1</option></select></td>
+					</tr>
+					<tr>
+						<td>Tartar di Tonno</td>
+						<td>5,99€</td>
+						<td><select name="age" class="selectDish"><option>0</option><option>1</option></select></td>
+					</tr>
+					<tr>
+						<td>Trota Salmonata agli Spinaci</td>
+						<td>5,99€</td>
+						<td><select name="age" class="selectDish"><option>0</option><option>1</option></select></td>
+					</tr>
+					<tr>
+						<td>Carpaccio di Capesante e Gamberetti</td>
+						<td>5,99€</td>
+						<td><select name="age" class="selectDish"><option>0</option><option>1</option></select></td>
+					</tr>
+					<tr>
+						<td>Parmigiana di Melanzane</td>
+						<td>5,99€</td>
+						<td><select name="age" class="selectDish"><option>0</option><option>1</option></select></td>
+					</tr>
+					<tr>
+						<td>Carpaccio di Manzo</td>
+						<td>5,99€</td>
+						<td><select name="age" class="selectDish"><option>0</option><option>1</option></select></td>
+					</tr>
+					<tr>
+						<td><b>Hauptspeisen</b></td>
+					</tr>
+					<tr>
+						<td>Tagliolini alla Parmigiana</td>
+						<td>10,99€</td>
+						<td><select name="age" class="selectDish"><option>0</option><option>1</option></select></td>
+					</tr>
+					<tr>
+						<td>Tagliolini Porcini e Pancetta</td>
+						<td>10,99€</td>
+						<td><select name="age" class="selectDish"><option>0</option><option>1</option></select></td>
+					</tr>
+					<tr>
+						<td>Spaghetti Gallo Nero</td>
+						<td>10,99€</td>
+						<td><select name="age" class="selectDish"><option>0</option><option>1</option></select></td>
+					</tr>
+					<tr>
+						<td>Pizza Speciale</td>
+						<td>10,99€</td>
+						<td><select name="age" class="selectDish"><option>0</option><option>1</option></select></td>
+					</tr>
+					<tr>
+						<td><b>Desserts</b></td>
+					</tr>
+					<tr>
+						<td>Tiramisù</td>
+						<td>6,99€</td>
+						<td><select name="age" class="selectDish"><option>0</option><option>1</option></select></td>
+					</tr>
+					<tr>
+						<td>Creme Brulée</td>
+						<td>6,99€</td>
+						<td><select name="age" class="selectDish"><option>0</option><option>1</option></select></td>
+					</tr>
+					<tr>
+						<td>Panna Cotta</td>
+						<td>6,99€</td>
+						<td><select name="age" class="selectDish"><option>0</option><option>1</option></select></td>
+					</tr>
+					</table>
 
             <div style="overflow:auto;">
                 <div style="float: right; margin-top: 50px;">
@@ -364,10 +380,13 @@
             </form>
         </div>
 
-        <div id="success" class="tab" style="display: none;">
-            <h3>Reservierung erfolgreich abgeschlossen!</h3>
-            <p>Sie erhalten Ihre Reservierungsdaten per E-Mail.</p>
-        </div>
+                <div id="success" class="tab" style="display: none;">
+                    <h3>Reservierung erfolgreich abgeschlossen!</h3>
+                    <p>Sie erhalten Ihre Reservierungsdaten per E-Mail.</p>
+					<br>
+					<a href="panuccis.html"><button type="button" class="nextButton">Neue Reservierung</button></a>
+					<a href="home.html"><button type="button" class="nextButton">Zur Startseite</button></a>
+                </div>
 
 
     </div>
