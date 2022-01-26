@@ -6,81 +6,124 @@
     <title>Mitarbeiter-Login</title>
 </head>
 <body>
-    <div class="header">
-        <a href="home.html"><h1>Panucci's</h1></a>
-        <div style="overflow: auto">
-            <button id="logoutButton" type="button" style="display: none; position: absolute; right: 5%; top: 52px; color: black; background-color: #f1f1f1; border: solid 1px; border-radius: 0" class="nextButton" onclick="workerLogout()">Logout</button>
-        </div>
+
+<div class="navbar">
+    <div class="logo active"><a href="home.html"><img src="/images/logo-panucci.png"></a></div>
+    <div class="navmenu">
+        <button id="logoutButton" type="button" style="display: none;" class="nextButton" onclick="workerLogout()">
+            Logout
+        </button>
     </div>
+</div>
 
-    <div id="worker_view" class="flex-container">
-        <div class="menu desktop-12-cols" style="min-height:400px;">
+<div id="worker_view" class="flex-container" style="min-height:600px;">
+    <div class="desktop-12-cols" style="background-color: white;">
 
-            <div id="workerLogin"">
-                <h2> MITARBEITER LOGIN</h2>
-                <label for="username">Username:</label>
-                <input type="text" id="username" onchange="updateNav()" required>
-                <label for="password">Password:</label>
-                <input type="text" id="password" onchange="updateNav()" required>
-                <button id="loginButton" type="button"  class="nextButton" onclick="workerLogin()" >Login</button>
+        <div id="workerLogin">
+            <h2> MITARBEITER LOGIN</h2>
+            <label for="username">Username:</label>
+            <input type="text" id="username" onchange="updateNav()" required>
+            <label for="password">Password:</label>
+            <input type="text" id="password" onchange="updateNav()" required>
+            <button id="loginButton" type="button" class="nextButton" onclick="workerLogin()">Login</button>
+        </div>
+
+        <div id="workerOverview" style=" display: none;">
+
+            <div>
+                <h1 style="display: inline-block;"> Übersicht aller Reservierungen </h1>
+            </div>
+            <div>
+                <button id="workerPrevButton" type="button" disabled onclick="workerPrevDate()"><--</button>
+                <label id="workerDate">27.01.22 (heute)</label>
+                <button id="workerNextButton" type="button" onclick="workerNextDate()">--></button>
             </div>
 
-            <div id="workerOverview" style=" display: none;">
+            <table id="first" class="reservation_table">
+                <col width="100px"/>
+                <col width="100px"/>
+                <col width="80px"/>
+                <col width="80px"/>
+                <col width="120px"/>
+                <col width="350px"/>
+                <col width="80px"/>
+                <tr>
+                    <th>Reservierungsnr.</th>
+                    <th>Tischnr.</th>
+                    <th>Personen</th>
+                    <th>Uhrzeit</th>
+                    <th>Speisen</th>
+                    <th>Kontaktdaten</th>
+                    <th style="background-color: #F0FFF0">Bearbeiten</th>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>12, 15</td>
+                    <td>5</td>
+                    <td>18:00</td>
+                    <td style="text-align: right;">X</td>
+                    <td>Mustermann, Max, max@musterman.de, 1234567</td>
+                    <td style="font-size: 18pt; transform: scaleX(-1)">✎</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>4</td>
+                    <td>2</td>
+                    <td>19:00</td>
+                    <td style="text-align: right;">anzeigen ▼</td>
+                    <td>Musterfrau, Erika, erika@musterfrau.de, 7654321</td>
+                    <td style="font-size: 18pt; transform: scaleX(-1);">✎</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>9, 10, 11</td>
+                    <td>10</td>
+                    <td>20:30</td>
+                    <td style="text-align: right;">anzeigen ▼</td>
+                    <td>Müller, Olaf, Olaf@Müller.de, 7654321</td>
+                    <td style="font-size: 18pt; transform: scaleX(-1)">✎</td>
+                </tr>
+            </table>
 
-                <div>
-                    <h1 style="display: inline-block;"> Übersicht aller Reservierungen </h1>
-                    <!--<button id="logoutButton" type="button" style="position: absolute; right: 5%; top: 10%; transform: translateY(-50%);"  class="nextButton" onclick="workerLogout()">Logout</button> -->
-                </div>
-                <div>
-                    <button id="workerPrevButton" type="button" disabled onclick="workerPrevDate()"><--</button>
-                    <label id="workerDate">18.01.22 (heute)</label>
-                    <button id="workerNextButton" type="button"  onclick="workerNextDate()">--></button>
-                </div>
+            <table id="second" style="display: none" class="reservation_table">
+                <col width="100px"/>
+                <col width="100px"/>
+                <col width="80px"/>
+                <col width="80px"/>
+                <col width="120px"/>
+                <col width="350px"/>
+                <col width="80px"/>
+                <tr>
+                    <th>Reservierungsnr.</th>
+                    <th>Tischnr.</th>
+                    <th>Personen</th>
+                    <th>Uhrzeit</th>
+                    <th>Speisen</th>
+                    <th>Kontaktdaten</th>
+                    <th style="background-color: #F0FFF0">Bearbeiten</th>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>13, 16</td>
+                    <td>5</td>
+                    <td>21:00</td>
+                    <td style="text-align: right;">X</td>
+                    <td>Bauer, Hans, hans@bauer.de, 7483543</td>
+                    <td style="font-size: 18pt; transform: scaleX(-1);">✎</td>
+                </tr>
+            </table>
 
-                <table id="first" class="reservation_table">
-                    <col width="100px" />
-                    <col width="100px" />
-                    <col width="400px" />
-                    <tr>
-                        <th>Anzahl Personen</th>
-                        <th>Uhrzeit</th>
-                        <th>Kontaktdaten</th>
-                    </tr>
-                    <tr>
-                        <td>5</td>
-                        <td>18:00</td>
-                        <td>Mustermann, Max, max@musterman.de, 1234567</td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>19:00</td>
-                        <td>Musterfrau, Erika, erika@musterfrau.de, 7654321</td>
-                    </tr>
-                    <tr>
-                        <td>10</td>
-                        <td>20:30</td>
-                        <td>Müller, Olaf, Olaf@Müller.de, 7654321</td>
-                    </tr>
-                </table>
 
-                <table id="second" style="display: none" class="reservation_table">
-                    <col width="100px" />
-                    <col width="100px" />
-                    <col width="400px" />
-                    <tr>
-                        <th>Anzahl Personen</th>
-                        <th>Uhrzeit</th>
-                        <th>Kontaktdaten</th>
-                    </tr>
-                    <tr>
-                        <td>5</td>
-                        <td>21:00</td>
-                        <td>Bauer, Hans, hans@bauer.de, 7483543</td>
-                    </tr>
-                </table>
-            </div>
+            <p style="color: green; font-size: 20px;">✚ <span style="color: black">Reservierung hinzufügen</span></p>
+
+
         </div>
+
     </div>
+
+</div>
+
+<div class="footer"><p>Impresssum</p></div>
 
 <script src="script.js"></script>
 </body>

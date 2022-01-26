@@ -9,267 +9,372 @@
     </style>
 </head>
 <body>
-    <div class="header">
-        <a href="home.html"><h1 style="display: inline-block;">Panucci's</h1></a>
+<div class="navbar">
+    <div class="logo active"><a href="home.html"><img src="/images/logo-panucci.png"></a></div>
+</div>
+
+<div id="reservation_view" class="flex-container">
+    <div class="menu desktop-3-cols">
+        <div style="font-size:20pt">Tisch-Reservierung</div>
+        <div>
+            <div class="progress_bar" onclick="nextTab('mainData')"><span id="mainData_step" class="step">1</span><span
+                    id="description" class="step_description">Personen, Datum, Uhrzeit</span></div>
+            <div class="progress_bar" onclick="nextTab('table')"><span id="table_step" class="step">2</span><span
+                    id="table_description" class="step_description">Tischauswahl (optional)</span></div>
+            <div class="progress_bar" onclick="nextTab('dish')"><span id="dish_step" class="step">3</span><span
+                    id="dish_description" class="step_description">Speisenauswahl (optional)</span></div>
+            <div class="progress_bar" onclick="nextTab('contact')"><span id="contact_step" class="step">4</span><span
+                    class="step_description">Kontaktdaten</span></div>
+            <div class="progress_bar" style="margin-top: 50px"><span id="success_step" class="step"
+                                                                     style="visibility:hidden; padding: 5px 8px;">✓</span><span
+                    id="success_description" class="step_description"></span>
+            </div>
+        </div>
     </div>
-    <div id="reservation_view" class="flex-container">
-        <div class="menu desktop-3-cols">
-            <div style="font-size:24pt">Tisch-Reservierung</div>
-            <div>
-                <div class="progress_bar" onclick="nextTab('mainData')"><span id="mainData_step" class="step">1</span><span id="description" class="step_description">Personenanzahl, Datum, Uhrzeit auswählen</span></div>
-                <div class="progress_bar" onclick="nextTab('table')"><span id="table_step" class="step">2</span><span id="table_description" class="step_description">Tisch auswählen (optional)</span></div>
-                <div class="progress_bar" onclick="nextTab('dish')"><span id="dish_step" class="step">3</span><span id="dish_description" class="step_description">Speisen auswählen (optional)</span></div>
-                <div class="progress_bar" onclick="nextTab('contact')"><span id="contact_step" class="step">4</span><span class="step_description">Kontaktdaten angeben</span></div>
-                <div class="progress_bar"><span id="success_step" class="step">5</span><span class="step_description">Reservierung abschließen</span></div>
+
+    <div class="main desktop-9-cols">
+        <form id="reservation_form" action="">
+            <div id="mainData" class="tab">
+                <h3>Bitte wählen Sie Ihre Reservierungsdaten aus.</h3>
+                <div style="margin-bottom: 50px; ">
+                    <label for="guests">Anzahl Personen:</label>
+                    <select name="guests" id="guests" onchange="updateNav()">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                    </select>
+                </div>
+                <div style="margin-bottom: 50px">
+                    <label for="start">Datum:</label>
+                    <input type="date" id="start" max="2022-12-31" onchange="updateNav()">
+                    <script>
+                        document.getElementById('start').min = new Date().toISOString().split('T')[0];
+                        document.getElementById('start').value = new Date().toISOString().split('T')[0];
+                    </script>
+                </div>
+                <div>
+                    <label for="time">Uhrzeit:</label>
+                    <select name="time" id="time" onchange="updateNav()">
+                        <option value="18:00">18:00</option>
+                        <option value="18:30">18:30</option>
+                        <option value="19:00">19:00</option>
+                        <option value="19:30">19:30</option>
+                        <option value="20:00">20:00</option>
+                        <option value="20:30">20:30</option>
+                        <option value="21:00">21:00</option>
+                        <option value="21:30">21:30</option>
+                    </select>
+                </div>
+                <div style="overflow:auto;">
+                    <div style="float: right; margin-top: 50px;">
+                        <button type="button" class="nextButton" onclick="updateNav(); nextTab('table')">Weiter</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="table" class="tab" style="display: none;">
+
+                <div style="margin-top: 20px; margin-bottom: 30px; display: flex">
+                    <span style="font-size: 18pt; margin-top: auto">Wählen Sie Ihre Tische. (optional)</span>
+                    <button type="button"
+                            style="margin-left: auto; display: inline-block; background-color: #f1f1f1; color: green; border: solid green"
+                            class="nextButton"
+                            onclick="document.getElementById(`${currentTab}_step`).classList.add('finished'); document.getElementById('table_description').innerText = 'Ohne Tischauswahl reservieren'; nextTab('dish');">
+                        Weiter ohne Auswahl
+                    </button>
+                </div>
+
+                <div id="background">
+                    <div id="Hintergrund"><img src="images/Hintergrund.png"
+                                               style="box-shadow: 0 0 13px grey; padding: 1px"></div>
+                    <div id="table0" class="table-position"><img src="images/tisch2er.png" id="w2er-0"
+                                                                 onclick="selectedTable()" draggable="true"
+                                                                 ondragstart="drag(event)"></div>
+                    <div id="table1" class="table-position"><img src="images/tisch2er.png" id="w2er-1"
+                                                                 onclick="selectedTable()" draggable="true"
+                                                                 ondragstart="drag(event)"></div>
+                    <div id="big-table0" class="table-position"><img src="images/tisch4er.png" id="w4er-0"
+                                                                     onclick="selectedTable()" draggable="true"
+                                                                     ondragstart="drag(event)"></div>
+                    <div id="big-table1" class="table-position"><img src="images/tisch4er.png" id="w4er-1"
+                                                                     onclick="selectedTable()" draggable="true"
+                                                                     ondragstart="drag(event)"></div>
+                    <div id="big-table2" class="table-position"><img src="images/tisch4er.png" id="w4er-2"
+                                                                     onclick="selectedTable()" draggable="true"
+                                                                     ondragstart="drag(event)"></div>
+                    <div id="target5" class="target-area" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                    <div id="big-table3" class="table-position"><img src="images/tisch4er.png" id="w4er-3"
+                                                                     onclick="selectedTable()" draggable="true"
+                                                                     ondragstart="drag(event)"></div>
+                    <div id="target6" class="target-area" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                    <div id="table2" class="table-position"><img src="images/tisch2er-v.png" id="w2er-2"
+                                                                 onclick="selectedTable()" draggable="true"
+                                                                 ondragstart="drag(event)"></div>
+                    <div id="target8" class="target-area" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+
+                    <div id="table3" class="table-position"><img src="images/tisch2er-v.png" id="w2er-3"
+                                                                 onclick="selectedTable()" draggable="true"
+                                                                 ondragstart="drag(event)"></div>
+
+                    <div id="target9" class="target-area" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                    <div id="table4" class="table-position"><img src="images/tisch2er-v.png" id="w2er-4"
+                                                                 onclick="selectedTable()" draggable="true"
+                                                                 ondragstart="drag(event)"></div>
+                    <div id="target7" class="target-area" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+
+
+                    <div id="table5" class="table-position target-area target-w-2h" ondrop="drop(event)"
+                         ondragover="allowDrop(event)">
+                        <img src="images/tisch2er.png" id="w2er-5" onclick="selectedTable()" draggable="true"
+                             ondragstart="drag(event)">
+                    </div>
+                    <div id="target1" class="target-area target-w-2h" ondrop="drop(event)"
+                         ondragover="allowDrop(event)"></div>
+
+                    <div id="table6" class="table-position target-area target-w-2h" ondrop="drop(event)"
+                         ondragover="allowDrop(event)">
+                        <img src="images/tisch2er.png" id="w2er-6" onclick="selectedTable()" draggable="true"
+                             ondragstart="drag(event)">
+                    </div>
+                    <div id="target2" class="target-area target-w-2h" ondrop="drop(event)"
+                         ondragover="allowDrop(event)"></div>
+
+                    <div id="table7" class="table-position target-area target-w-2h" ondrop="drop(event)"
+                         ondragover="allowDrop(event)">
+                        <img src="images/tisch2er.png" id="w2er-7" onclick="selectedTable()" draggable="true"
+                             ondragstart="drag(event)">
+                    </div>
+                    <div id="target3" class="target-area target-w-2h" ondrop="drop(event)"
+                         ondragover="allowDrop(event)"></div>
+
+                    <div id="table8" class="table-position target-area target-w-2h" ondrop="drop(event)"
+                         ondragover="allowDrop(event)">
+                        <img src="images/tisch2er.png" id="w2er-8" onclick="selectedTable()" draggable="true"
+                             ondragstart="drag(event)">
+                    </div>
+                    <div id="target4" class="target-area target-w-2h" ondrop="drop(event)"
+                         ondragover="allowDrop(event)"></div>
+
+
+                    <div id="table9" class="table-position"><img src="images/tisch2er.png" id="g2er-9"
+                                                                 onclick="selectedTable()" draggable="true"
+                                                                 ondragstart="drag(event)"></div>
+                    <div id="table10" class="table-position"><img src="images/tisch2er.png" id="g2er-10"
+                                                                  onclick="selectedTable()" draggable="true"
+                                                                  ondragstart="drag(event)"></div>
+                    <div id="big-table4" class="table-position"><img src="images/tisch4er.png" id="g4er-4"
+                                                                     onclick="selectedTable()" draggable="true"
+                                                                     ondragstart="drag(event)"></div>
+                    <div id="big-table5" class="table-position"><img src="images/tisch4er.png" id="g4er-5"
+                                                                     onclick="selectedTable()" draggable="true"
+                                                                     ondragstart="drag(event)"></div>
+                    <div id="big-table6" class="table-position"><img src="images/tisch4er.png" id="g4er-6"
+                                                                     onclick="selectedTable()" draggable="true"
+                                                                     ondragstart="drag(event)"></div>
+                    <div id="big-table7" class="table-position"><img src="images/tisch4er.png" id="g4er-7"
+                                                                     onclick="selectedTable()" draggable="true"
+                                                                     ondragstart="drag(event)"></div>
+                    <div id="table11" class="table-position"><img src="images/tisch2er.png" id="g2er-11"
+                                                                  onclick="selectedTable()" draggable="true"
+                                                                  ondragstart="drag(event)"></div>
+                    <div id="table12" class="table-position"><img src="images/tisch2er.png" id="g2er-12"
+                                                                  onclick="selectedTable()" draggable="true"
+                                                                  ondragstart="drag(event)"></div>
+                    <div id="big-table8" class="table-position"><img src="images/tisch4er.png" id="g4er-8"
+                                                                     onclick="selectedTable()" draggable="true"
+                                                                     ondragstart="drag(event)"></div>
+                    <div id="big-table9" class="table-position"><img src="images/tisch4er.png" id="g4er-9"
+                                                                     onclick="selectedTable()" draggable="true"
+                                                                     ondragstart="drag(event)"></div>
+                    <div id="big-table10" class="table-position"><img src="images/tisch4er.png" id="g4er-10"
+                                                                      onclick="selectedTable()" draggable="true"
+                                                                      ondragstart="drag(event)"></div>
+                    <div id="big-table11" class="table-position"><img src="images/tisch4er.png" id="g4er-11"
+                                                                      onclick="selectedTable()" draggable="true"
+                                                                      ondragstart="drag(event)"></div>
+                    <div id="table13" class="table-position"><img src="images/tisch2er-v.png" id="t2er-13"
+                                                                  onclick="selectedTable()" draggable="true"
+                                                                  ondragstart="drag(event)"></div>
+                    <div id="table14" class="table-position"><img src="images/tisch2er-v.png" id="t2er-14"
+                                                                  onclick="selectedTable()" draggable="true"
+                                                                  ondragstart="drag(event)"></div>
+                    <div id="table15" class="table-position"><img src="images/tisch2er-v.png" id="t2er-15"
+                                                                  onclick="selectedTable()" draggable="true"
+                                                                  ondragstart="drag(event)"></div>
+                    <div id="table16" class="table-position"><img src="images/tisch2er-v.png" id="t2er-16"
+                                                                  onclick="selectedTable()" draggable="true"
+                                                                  ondragstart="drag(event)"></div>
+                    <div id="table17" class="table-position"><img src="images/tisch2er-v.png" id="t2er-17"
+                                                                  onclick="selectedTable()" draggable="true"
+                                                                  ondragstart="drag(event)"></div>
+                    <div id="table18" class="table-position"><img src="images/tisch2er-v.png" id="t2er-18"
+                                                                  onclick="selectedTable()" draggable="true"
+                                                                  ondragstart="drag(event)"></div>
+                    <div id="big-table12" class="table-position"><img src="images/tisch4er-v.png" id="t4er-12"
+                                                                      onclick="selectedTable()" draggable="true"
+                                                                      ondragstart="drag(event)"></div>
+                    <div id="big-table13" class="table-position"><img src="images/tisch4er-v.png" id="t4er-13"
+                                                                      onclick="selectedTable()" draggable="true"
+                                                                      ondragstart="drag(event)"></div>
+                    <div id="big-table14" class="table-position"><img src="images/tisch4er-v.png" id="t4er-14"
+                                                                      onclick="selectedTable()" draggable="true"
+                                                                      ondragstart="drag(event)"></div>
+                    <div id="big-table15" class="table-position"><img src="images/tisch4er-v.png" id="t4er-15"
+                                                                      onclick="selectedTable()" draggable="true"
+                                                                      ondragstart="drag(event)"></div>
+                    <div id="big-table16" class="table-position"><img src="images/tisch4er-v.png" id="t4er-16"
+                                                                      onclick="selectedTable()" draggable="true"
+                                                                      ondragstart="drag(event)"></div>
+                    <div id="big-table17" class="table-position"><img src="images/tisch4er-v.png" id="t4er-17"
+                                                                      onclick="selectedTable()" draggable="true"
+                                                                      ondragstart="drag(event)"></div>
+                </div>
+
+
+                <div style="overflow:auto;">
+                    <div style="float: right; margin-top: 50px;">
+                        <button type="button" id="tableSubmit" class="nextButton" onclick="selectTables()">Weiter
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+
+        <div id="dish" class="tab" style="display: none;">
+
+            <div style="margin-top: 20px; margin-bottom: 30px; display: flex">
+                <span style="font-size: 20pt; margin-top: auto">Wählen Sie Ihre Speisen aus. (optional)</span>
+                <button type="button"
+                        style="margin-left: auto; display: inline-block; background-color: #f1f1f1; color: green; border: solid green"
+                        class="nextButton"
+                        onclick="document.getElementById(`${currentTab}_step`).classList.add('finished'); document.getElementById('dish_description').innerText = 'Ohne Speisen reservieren'; nextTab('contact')">
+                    Weiter ohne Auswahl
+                </button>
+            </div>
+
+            <p>Wenn Sie Speisen auswählen, können Sie Ihre Auswahl im Restaurant ändern.</p>
+
+            <h4>Person 1</h4>
+            <label for="starter">Vorspeise:</label>
+            <select name="starter" id="starter" onchange="updateNav()">
+                <option value="">Vorspeise wählen</option>
+                <option value="Mozzarella Tartufata">Mozzarella Tartufata</option>
+                <option value="Tartar di Tonno">Tartar di Tonno</option>
+                <option value="Trota Salmonata agli Spinaci">Trota Salmonata agli Spinaci</option>
+                <option value="Carpaccio di Capesante e Gamberetti">Carpaccio di Capesante e Gamberetti</option>
+                <option value="Parmigiana di Melanzane">Parmigiana di Melanzane</option>
+                <option value="Carpaccio di Manzo">Carpaccio di Manzo</option>
+            </select>
+
+            <div></div>
+
+            <label for="main_course">Hauptspeise:</label>
+            <select name="main_course" id="main_course" onchange="updateNav()">
+                <option value="">Hauptspeise wählen</option>
+                <option value="Tagliolini alla Parmigiana">Tagliolini alla Parmigiana</option>
+                <option value="Tagliolini Porcini e Pancetta">Tagliolini Porcini e Pancetta</option>
+                <option value="Spaghetti Gallo Nero">Spaghetti Gallo Nero</option>
+                <option value="Pizza Speciale">Pizza Speciale</option>
+            </select>
+
+            <div></div>
+
+            <label for="dessert">Dessert:</label>
+            <select name="dessert" id="dessert" onchange="updateNav()">
+                <option value="">Dessert wählen</option>
+                <option value="Tiramisù">Tiramisù</option>
+                <option value="Creme Brulée">Creme Brulée</option>
+                <option value="Panna Cotta">Panna Cotta</option>
+            </select>
+
+            <h4>Person 2</h4>
+            <label for="starter">Vorspeise:</label>
+            <select name="starter" id="starter" onchange="updateNav()">
+                <option value="">Vorspeise wählen</option>
+                <option value="Mozzarella Tartufata">Mozzarella Tartufata</option>
+                <option value="Tartar di Tonno">Tartar di Tonno</option>
+                <option value="Trota Salmonata agli Spinaci">Trota Salmonata agli Spinaci</option>
+                <option value="Carpaccio di Capesante e Gamberetti">Carpaccio di Capesante e Gamberetti</option>
+                <option value="Parmigiana di Melanzane">Parmigiana di Melanzane</option>
+                <option value="Carpaccio di Manzo">Carpaccio di Manzo</option>
+            </select>
+
+            <div></div>
+
+            <label for="main_course">Hauptspeise:</label>
+            <select name="main_course" id="main_course" onchange="updateNav()">
+                <option value="">Hauptspeise wählen</option>
+                <option value="Tagliolini alla Parmigiana">Tagliolini alla Parmigiana</option>
+                <option value="Tagliolini Porcini e Pancetta">Tagliolini Porcini e Pancetta</option>
+                <option value="Spaghetti Gallo Nero">Spaghetti Gallo Nero</option>
+                <option value="Pizza Speciale">Pizza Speciale</option>
+            </select>
+
+            <div></div>
+
+            <label for="dessert">Dessert:</label>
+            <select name="dessert" id="dessert" onchange="updateNav()">
+                <option value="">Dessert wählen</option>
+                <option value="Tiramisù">Tiramisù</option>
+                <option value="Creme Brulée">Creme Brulée</option>
+                <option value="Panna Cotta">Panna Cotta</option>
+            </select>
+
+            <div style="overflow:auto;">
+                <div style="float: right; margin-top: 50px;">
+                    <button type="button" class="nextButton" onclick="updateNav(); nextTab('contact')">Weiter</button>
+                </div>
             </div>
         </div>
 
-        <div class="main desktop-6-cols">
-            <form id="reservation_form" action="">
-                <div id="mainData" class="tab">
-                <h3>Bitte wählen Sie Ihre Reservierungsdaten aus.</h3>
-                    <div style="margin-bottom: 50px">
-                        <label for="guests">Anzahl Personen:</label>
-                        <select name="guests" id="guests" onchange="updateNav()">
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                            <option value="6">6</option>
-                            <option value="7">7</option>
-                            <option value="8">8</option>
-                            <option value="9">9</option>
-                            <option value="10">10</option>
-                        </select>
-                    </div>
-                    <div style="margin-bottom: 50px">
-                        <label for="start">Datum:</label>
-                        <input type="date" id="start" max="2022-12-31" onchange="updateNav()">
-                        <script>
-                            document.getElementById('start').min = new Date().toISOString().split('T')[0];
-                            document.getElementById('start').value = new Date().toISOString().split('T')[0];
-                        </script>
-                    </div>
-                    <div>
-                        <label for="time">Uhrzeit:</label>
-                        <select name="time" id="time" onchange="updateNav()">
-                            <option value="18:00">18:00</option>
-                            <option value="18:30">18:30</option>
-                            <option value="19:00">19:00</option>
-                            <option value="19:30">19:30</option>
-                            <option value="20:00">20:00</option>
-                            <option value="20:30">20:30</option>
-                            <option value="21:00">21:00</option>
-                            <option value="21:30">21:30</option>
-                        </select>
-                    </div>
-                    <div style="overflow:auto;">
-                        <div style="float: right; margin-top: 50px;">
-                            <button type="button" class="nextButton" onclick="updateNav(); nextTab('table')">Weiter</button>
-                        </div>
-                    </div>
-                </div>
+        <div id="contact" class="tab" style="display: none;">
+            <form onsubmit="formSubmit(event)">
+                <h3>Geben Sie Ihre Kontaktdaten an.</h3>
 
-                <div id="table" class="tab" style="display: none;">
+                <label for="firstName">Vorname:</label>
+                <input type="text" id="firstName" placeholder="Max" onchange="updateNav()" required>
+                <br> <br> <br>
 
-                    <div style="overflow:auto;">
-                        <div style="float: right;">
-                            <button type="button" style="background-color: #f1f1f1; color: black" class="nextButton" onclick="document.getElementById(`${currentTab}_step`).classList.add('finished'); document.getElementById('table_description').innerText = 'Ohne Tischauswahl reservieren'; nextTab('dish');">Weiter ohne Auswahl > </button>
-                        </div>
-                    </div>
+                <label for="lastName">Nachname:</label>
+                <input type="text" id="lastName" placeholder="Mustermann" onchange="updateNav()" required>
+                <br> <br> <br>
 
-                    <h3 id="select_tables">Welche Tische möchten Sie reservieren? (optional)</h3>
-                    <p>Sie können die Reservierung auch ohne Tischauswahl abschließen.</p>
+                <label for="email">E-Mail-Adresse:</label>
+                <input type="email" id="email" placeholder="hi@example.com" onchange="updateNav()" required>
+                <br> <br> <br>
+
+                <label for="telNumber">Telefonnummer:</label>
+                <input type="text" pattern="[0-9]{5}" id="telNumber" placeholder="01234" onchange="updateNav()"
+                       required>
 
 
-
-                    <div class="grid-container_2">
-                        <div class="table-placeholder-2">
-                            <div id="table1" class="table table-horizontal" onclick="selectedTable()" draggable="true" ondragstart="drag(event)">1</div>
-                        </div>
-
-                        <div class="grid-container_3">
-                            <div id="target5" class="target-area-2" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-
-                            <div id="table2" class="table table-horizontal" onclick="selectedTable()" draggable="true" ondragstart="drag(event)">2</div>
-
-                            <div id="target6" class="target-area-2" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-                        </div>
-
-                        <div class="table-placeholder-2">
-                            <div id="table3" class="table table-horizontal" onclick="selectedTable()" draggable="true" ondragstart="drag(event)">3</div>
-                        </div>
-                    </div>
-
-                    <div>
-                        <div class="bar">Theke</div>
-                    </div>
-
-                    <div class="grid-container">
-                        <div class="table-placeholder">
-                            <div id="table4" class="table table-vertical" onclick="selectedTable()" draggable="true" ondragstart="drag(event)">4</div>
-                        </div>
-                        <div class="table-placeholder">
-                            <div id="table5" class="table table-vertical" onclick="selectedTable()" draggable="true" ondragstart="drag(event)">5</div>
-                        </div>
-                        <div class="table-placeholder">
-                            <div id="table6" class="table table-vertical" onclick="selectedTable()" draggable="true" ondragstart="drag(event)">6</div>
-                        </div>
-                        <div class="table-placeholder">
-                            <div id="table7" class="table table-vertical" onclick="selectedTable()" draggable="true" ondragstart="drag(event)">7</div>
-                        </div>
-
-                        <div id="target1" class="target-area" ondrop="drop(event)" ondragover="allowDrop(event)">
-                            <div class="table-placeholder"></div>
-                            <div id="table8" class="table table-vertical" onclick="selectedTable()">8</div>
-                        </div>
-                        <div id="target2" class="target-area" ondrop="drop(event)" ondragover="allowDrop(event)">
-                            <div class="table-placeholder"></div>
-                            <div id="table9" class="table table-vertical" onclick="selectedTable()">9</div>
-                        </div>
-                        <div id="target3" class="target-area" ondrop="drop(event)" ondragover="allowDrop(event)">
-                            <div class="table-placeholder"></div>
-                            <div id="table10" class="table table-vertical" onclick="selectedTable()">10</div>
-                        </div>
-                        <div id="target4" class="target-area" ondrop="drop(event)" ondragover="allowDrop(event)">
-                            <div class="table-placeholder"></div>
-                            <div id="table11" class="table table-vertical" onclick="selectedTable()">11</div>
-                        </div>
-                    </div>
-
-                    <div style="overflow:auto;">
-                        <div style="float: right; margin-top: 50px;">
-                            <button type="button" class="nextButton" onclick="selectTables()">Weiter</button>
-                        </div>
+                <div style="overflow:auto;">
+                    <div style="float: right; margin-top: 50px;">
+                        <button type="submit" class="nextButton">Reservieren</button>
                     </div>
                 </div>
             </form>
-
-
-
-
-                <div id="dish" class="tab" style="display: none;">
-
-                    <div style="overflow:auto;">
-                        <div style="float: right;">
-                            <button type="button" style="background-color: #f1f1f1; color: black" class="nextButton" onclick="document.getElementById(`${currentTab}_step`).classList.add('finished'); document.getElementById('dish_description').innerText = 'Ohne Speisen reservieren'; nextTab('contact');">Weiter ohne Auswahl > </button>
-                        </div>
-                    </div>
-
-                    <h3>Wählen Sie Ihre Speisen aus. (optional)</h3>
-                    <p>Wenn Sie Speisen auswählen, können Sie Ihre Auswahl im Restaurant ändern.</p>
-
-            <h4>Person 1</h4>
-                    <label for="starter">Vorspeise:</label>
-                    <select name="starter" id="starter" onchange="updateNav()">
-            <option value="">Vorspeise wählen</option>
-                        <option value="Mozzarella Tartufata">Mozzarella Tartufata</option>
-                        <option value="Tartar di Tonno">Tartar di Tonno</option>
-                        <option value="Trota Salmonata agli Spinaci">Trota Salmonata agli Spinaci</option>
-                        <option value="Carpaccio di Capesante e Gamberetti">Carpaccio di Capesante e Gamberetti</option>
-                        <option value="Parmigiana di Melanzane">Parmigiana di Melanzane</option>
-                        <option value="Carpaccio di Manzo">Carpaccio di Manzo</option>
-                    </select>
-                    
-            <div></div>
-
-                    <label for="main_course">Hauptspeise:</label>
-                    <select name="main_course" id="main_course" onchange="updateNav()">
-            <option value="">Hauptspeise wählen</option>
-                        <option value="Tagliolini alla Parmigiana">Tagliolini alla Parmigiana</option>
-                        <option value="Tagliolini Porcini e Pancetta">Tagliolini Porcini e Pancetta</option>
-                        <option value="Spaghetti Gallo Nero">Spaghetti Gallo Nero</option>
-                        <option value="Pizza Speciale">Pizza Speciale</option>
-                    </select>
-                    
-            <div></div>
-                    
-            <label for="dessert">Dessert:</label>
-            <select name="dessert" id="dessert" onchange="updateNav()">
-            <option value="">Dessert wählen</option>
-                        <option value="Tiramisù">Tiramisù</option>
-                        <option value="Creme Brulée">Creme Brulée</option>
-                        <option value="Panna Cotta">Panna Cotta</option>
-                    </select>
-                    
-            <h4>Person 2</h4>
-            <label for="starter">Vorspeise:</label>
-                    <select name="starter" id="starter" onchange="updateNav()">
-            <option value="">Vorspeise wählen</option>
-                        <option value="Mozzarella Tartufata">Mozzarella Tartufata</option>
-                        <option value="Tartar di Tonno">Tartar di Tonno</option>
-                        <option value="Trota Salmonata agli Spinaci">Trota Salmonata agli Spinaci</option>
-                        <option value="Carpaccio di Capesante e Gamberetti">Carpaccio di Capesante e Gamberetti</option>
-                        <option value="Parmigiana di Melanzane">Parmigiana di Melanzane</option>
-                        <option value="Carpaccio di Manzo">Carpaccio di Manzo</option>
-                    </select>
-                    
-            <div></div>
-
-                    <label for="main_course">Hauptspeise:</label>
-                    <select name="main_course" id="main_course" onchange="updateNav()">
-            <option value="">Hauptspeise wählen</option>
-                        <option value="Tagliolini alla Parmigiana">Tagliolini alla Parmigiana</option>
-                        <option value="Tagliolini Porcini e Pancetta">Tagliolini Porcini e Pancetta</option>
-                        <option value="Spaghetti Gallo Nero">Spaghetti Gallo Nero</option>
-                        <option value="Pizza Speciale">Pizza Speciale</option>
-                    </select>
-                    
-            <div></div>
-                    
-            <label for="dessert">Dessert:</label>
-            <select name="dessert" id="dessert" onchange="updateNav()">
-            <option value="">Dessert wählen</option>
-                        <option value="Tiramisù">Tiramisù</option>
-                        <option value="Creme Brulée">Creme Brulée</option>
-                        <option value="Panna Cotta">Panna Cotta</option>
-                    </select>
-                            
-                    <div style="overflow:auto;">
-                        <div style="float: right; margin-top: 50px;">
-                            <button type="button" class="nextButton" onclick="updateNav(); nextTab('contact')">Weiter</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="contact" class="tab" style="display: none;">
-                    <form onsubmit="formSubmit(event)">
-                        <h3>Geben Sie Ihre Kontaktdaten an.</h3>
-    
-                        <label for="firstName">Vorname:</label>
-                        <input type="text" id="firstName" placeholder="Max" onchange="updateNav()" required>
-                        <br> <br> <br>
-    
-                        <label for="lastName">Nachname:</label>
-                        <input type="text" id="lastName" placeholder="Mustermann" onchange="updateNav()" required>
-                        <br> <br> <br>
-    
-                        <label for="email">E-Mail-Adresse:</label>
-                        <input type="email" id="email" placeholder="hi@example.com" onchange="updateNav()" required>
-                        <br> <br> <br>
-    
-                        <label for="telNumber">Telefonnummer:</label>
-                        <input type="text" pattern="[0-9]{5}" id="telNumber" placeholder="01234" onchange="updateNav()" required>
-    
-    
-                        <div style="overflow:auto;">
-                            <div style="float: right; margin-top: 50px;">
-                                <button type="submit" class="nextButton">Reservieren</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-
-                <div id="success" class="tab" style="display: none;">
-                    <h3>Reservierung erfolgreich abgeschlossen!</h3>
-                    <p>Sie erhalten Ihre Reservierungsdaten per E-Mail.</p>
-                </div>
-
-
         </div>
-    </div>
 
-    <script src="script.js"></script>
+        <div id="success" class="tab" style="display: none;">
+            <h3>Reservierung erfolgreich abgeschlossen!</h3>
+            <p>Sie erhalten Ihre Reservierungsdaten per E-Mail.</p>
+        </div>
+
+
+    </div>
+</div>
+
+<div class="footer"><p>Impresssum I Kontakt</p></div>
+
+<script src="script.js"></script>
 </body>
 </html>
