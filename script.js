@@ -12,6 +12,23 @@ config_json.then((response) => {
     });
 });
 
+document.onreadystatechange = () =>{
+    const dishInputs = document.querySelectorAll('#dish select');
+    dishInputs.forEach((input) => {
+        input.addEventListener('change', dishSelected);
+    });
+
+    const contactDataInputs = document.querySelectorAll('#contact input');
+    contactDataInputs.forEach((input) => {
+        input.addEventListener('change', checkContactForm);
+    });
+
+    const mainDataInputs = document.querySelectorAll('#mainData select');
+    mainDataInputs.forEach((input) => {
+        input.addEventListener('change', mainDataSelected);
+    });
+};
+
 function nextTab(theNextTab) {
     document.getElementById(currentTab).style.display = 'none';
     document.getElementById(`${currentTab}_step`).classList.remove('active');
@@ -47,7 +64,7 @@ function workerLogin() {
 }
 
 function workerLogout() {
-    document.getElementById('workerLogin').style.display = 'inline';
+    document.getElementById('workerLogin').style.display = 'block';
     document.getElementById('workerOverview').style.display = 'none';
     document.getElementById("username").value = '';
     document.getElementById("password").value = '';
@@ -91,7 +108,7 @@ function updateNav() {
     }
 
     if (currentTab == 'dish') {
-        selects = document.querySelectorAll('#dish > select');
+        let selects = document.querySelectorAll('#dish select');
         if (Array.from(selects).some((event) => event.value != '')) {
             document.getElementById('dish_description').innerText = 'Speisen ausgewählt'
         }
@@ -185,7 +202,29 @@ function selectTables() {
     return false;
 }
 
+function dishSelected() {
+    document.getElementById('dish-selection').style.backgroundColor = '#00b33c';
+}
 
+function mainDataSelected() {
+    document.getElementById('main-data-select').style.backgroundColor = '#00b33c';
+}
+
+function checkContactForm() {
+    const inputs = document.querySelectorAll('#contact input');
+    let inputsOk = true;
+    inputs.forEach((input) => {
+       if(!input.checkValidity()){
+           document.getElementById('form-submit').style.backgroundColor = 'lightgrey';
+           inputsOk = false;
+       }
+    });
+    if(inputsOk) {
+        document.getElementById('form-submit').style.backgroundColor = '#00b33c';
+        return true;
+    }
+    return false;
+}
 function formSubmit(e) {
     e.preventDefault();
     updateNav();
@@ -266,7 +305,7 @@ function cross_reserved_tables(reservations) {
         reservation.table.forEach(function (table) {
             let table_element = document.getElementById(table);
             let img_src;
-            if (table_element.id.startsWith('t')) {
+            if (table_element.id.startsWith('t') && table_element.tagName == 'img') {
                 const img_el = table_element.children;
                 img_src = img_el[0].getAttribute('src');
             } else if (table_element.id.startsWith('w') || table_element.id.startsWith('g')) {
@@ -274,6 +313,7 @@ function cross_reserved_tables(reservations) {
                 table_element = table_element.parentElement;
             } else {
                 console.log('falsches img/table')
+                return;
             }
 
             table_element.removeChild(table_element.firstElementChild);
@@ -322,6 +362,8 @@ function drag(ev) {
         target_prefix = 'target-w-2-v';
     } else if (img.includes('tisch2er')) {
         target_prefix = 'target-w-2';
+    } else if (img.includes('tisch4')) {
+        target_prefix = 'target4';
     } else {
         return;
     }
@@ -359,7 +401,9 @@ function drop(ev) {
         target_prefix = 'target-w-2-v';
     } else if (img.includes('tisch2er')) {
         target_prefix = 'target-w-2';
-    } else {
+    } else if (img.includes('tisch4er')) {
+        target_prefix = 'target4';
+    }else {
         return;
     }
 

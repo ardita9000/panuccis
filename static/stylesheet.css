@@ -83,7 +83,7 @@ a, a:visited {
 
 .menu {
     background-color: #ffffff;
-    color: green;
+    color: dimgray;
     padding: 10px 10px;
     border-right: solid 10px #f1f1f1;
     /*color: #00519e;*/
@@ -150,7 +150,13 @@ a, a:visited {
     font-size: 12pt;
 }
 
-#tableSubmit {
+#help-btn {
+    border: none;
+    background-color:lightgrey;
+    font-size: 14pt;
+}
+
+#tableSubmit, #form-submit, #dish-selection, #main-data-select{
     background-color: lightgrey;
 }
 

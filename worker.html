@@ -19,13 +19,32 @@
 <div id="worker_view" class="flex-container" style="min-height:600px;">
     <div class="desktop-12-cols" style="background-color: white;">
 
-        <div id="workerLogin">
+        <div id="workerLogin" style="width:500px;">
+
             <h2> MITARBEITER LOGIN</h2>
-            <label for="username">Username:</label>
-            <input type="text" id="username" onchange="updateNav()" required>
-            <label for="password">Password:</label>
-            <input type="text" id="password" onchange="updateNav()" required>
-            <button id="loginButton" type="button" class="nextButton" onclick="workerLogin()">Login</button>
+            <div class="container">
+                <div class="row">
+                    <div class="col-40">
+                        <label for="username">Username:</label>
+                    </div>
+                    <div class="col-60">
+                        <input type="text" id="username" onchange="updateNav()" required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-40">
+                        <label for="password">Passwort:</label>
+                    </div>
+                    <div class="col-60">
+                        <input type="text" id="password" onchange="updateNav()" required>
+                    </div>
+                </div>
+                <div style="overflow:auto;">
+                    <div style="float: right; margin-top: 50px;">
+                        <button id="loginButton" type="button" class="nextButton" style="float: right" onclick="workerLogin()">Login</button>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div id="workerOverview" style=" display: none;">
