@@ -97,10 +97,6 @@ function updateNav() {
         }
     }
 
-    if (currentTab == 'contact') {
-        document.getElementById('success_step').style.visibility = 'visible';
-        document.getElementById('success_description').innerText = 'Reservierung abgeschlossen';
-    }
 }
 
 function updateMaxDish(){
@@ -194,6 +190,8 @@ function formSubmit(e) {
     e.preventDefault();
     updateNav();
     nextTab('success');
+    document.getElementById('success_step').style.visibility = 'visible';
+    document.getElementById('success_description').innerText = 'Reservierung abgeschlossen';
     document.getElementById('success_step').classList.add('finished');
 
 

@@ -151,7 +151,7 @@ a, a:visited {
 }
 
 #tableSubmit {
-    background-color: dimgray;
+    background-color: lightgrey;
 }
 
 .noSelection {
@@ -216,6 +216,35 @@ table.reservation_table tr {
     background: lime;
     box-shadow: 0 0 15px lime;
 }
+
+.container {
+    border-radius: 5px;
+    background-color: #f1f1f1;
+    padding: 20px;
+}
+
+.col-40 {
+    float: left;
+    width: 40%;
+    margin-top: 6px;
+}
+
+.col-60 {
+    float: left;
+    width: 60%;
+    margin-top: 6px;
+}
+
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+input[type=text], input[type=email] {
+    width: 100%;
+}
+
 
 #background {
     left: 0px;
